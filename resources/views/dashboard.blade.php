@@ -22,7 +22,7 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                 Okul</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">4</div>
+                            <div class="h2 mb-0 font-weight-bold text-gray-800">4</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-university fa-3x text-gray-300"></i>
@@ -40,7 +40,7 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                 Öğretmen</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">47</div>
+                            <div class="h2 mb-0 font-weight-bold text-gray-800">47</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-female fa-3x text-gray-300"></i>
@@ -60,7 +60,7 @@
                             </div>
                             <div class="row no-gutters align-items-center">
                                 <div class="col-auto">
-                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">797</div>
+                                    <div class="h2 mb-0 mr-3 font-weight-bold text-gray-800">797</div>
                                 </div>
                             </div>
                         </div>
@@ -80,7 +80,7 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                 Öğrenci</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">460</div>
+                            <div class="h2 mb-0 font-weight-bold text-gray-800">460</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-child fa-3x text-gray-300"></i>

@@ -1,0 +1,32 @@
+{
+    "Dashboard": "Özet",
+    "Schools": "Okullar",
+    "Groups": "Gruplar",
+
+    "Create": "Yeni",
+    "Delete": "Sil",
+    "Confirm": "Onayla",
+    "Cancel": "Vazgeç",
+    "Save": "Kaydet",
+
+    "Update School": "Okul Düzenle",
+    "Create School": "Okul Ekle",
+    "User": "Kullanıcı",
+    "Name": "Adı",
+    "E-mail": "E-mail",
+    "Phone": "Telefon",
+    "Address": "Adres",
+    "Active": "Aktif",
+    "Status": "Durumu",
+    "Passive": "Pasif",
+
+    "Delete Confirmation": "Silme Onayı",
+    "Are you sure you want to delete this item?": "Silmek istediğinizden emin misiniz?",
+    "Deleted successfully": "Başarıyla silindi",
+    "Delete failed": "Silme işlemi başarısız!",
+    "Created successfully": "Başarıyla oluşturuldu",
+    "Create failed": "Oluşturma işlemi başarısız!",
+    "Updated successfully": "Başarıyla güncellendi",
+    "Update failed": "Güncelleme işlemi başarısız!",
+    "An error occurred": "Bir hata oluştu"
+}

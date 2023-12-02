@@ -5,6 +5,8 @@
         <i class="fa fa-bars"></i>
     </button>
 
+<?php
+/*
     <!-- Topbar Search -->
     <form
         class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
@@ -18,6 +20,10 @@
             </div>
         </div>
     </form>
+*/
+?>
+
+{{ session('company')['name'] }}
 
     <!-- Topbar Navbar -->
     <ul class="navbar-nav ml-auto">
@@ -162,6 +168,24 @@
                 <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
             </div>
         </li>
+        <li class="nav-item dropdown no-arrow mx-1">
+            <a class="nav-link dropdown-toggle" href="#" id="langDropdown" role="button"
+               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img src="{{asset('images/flag-'.session('locale').'.svg')}}" width="20" height="16" alt="{{session('locale')}}" data-toggle="tooltip" data-original-title="{{session('locale')}}">
+            </a>
+            <!-- Dropdown - User Information -->
+            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                 aria-labelledby="userDropdown">
+                @foreach(config('app.languages') as $lang)
+                    @if(session('locale') != $lang)
+                        <a class="dropdown-item" href="{{route('language', ['lang' => $lang])}}" role="button">
+                            <img src="{{asset('images/flag-'.$lang.'.svg')}}" width="20" height="16" alt="{{$lang}}" data-toggle="tooltip" data-original-title="{{$lang}}"> {{$lang}}
+                        </a>
+                    @endif
+                @endforeach
+            </div>
+
+        </li>
 
         <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -169,8 +193,8 @@
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">User</span>
-                <i class="fas fa-2x fa-user-tie"></i>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ session()->get('user') ? session()->get('user')['name'] : '' }}</span>
+                <i class="fas fa-1x fa-user-tie"></i>
             </a>
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -183,15 +207,21 @@
                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                     Settings
                 </a>
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="#"  data-bs-toggle="modal" data-bs-target="#logoutModal">
                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                     Activity Log
                 </a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                <a class="dropdown-item" href="{{ route('logout') }}" data-bs-toggle="modal" data-bs-target="#logoutModal">
                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Logout
+                    {{__('Logout')}}
                 </a>
+                <?php
+/*                <a class="dropdown-item" href="{{ route('logout') }}" data-toggle="modal" data-target="#logoutModal">
+                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                Logout
+                </a>*/
+                ?>
             </div>
         </li>
 

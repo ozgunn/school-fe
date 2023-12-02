@@ -12,8 +12,8 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item {{ request()->is('dashboard') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ url('dashboard') }}">
+    <li class="nav-item {{ request()->is('/') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('home') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>{{ trans('Dashboard') }}</span></a>
     </li>
@@ -36,17 +36,18 @@
             </div>
         </div>
     </li>
-
-    <li class="nav-item">
-        <a class="nav-link" href="index.html">
-            <i class="fas fa-fw fa-graduation-cap"></i>
-            <span>Okullar</span></a>
-    </li>
+    @if(session('user')['role_id'] >= \App\Models\User::ROLE_ADMIN)
+        <li class="nav-item {{ str_contains(request()->path(), 'schools')? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('schools.index') }}">
+                <i class="fas fa-fw fa-graduation-cap"></i>
+                <span>{{ trans('Schools') }}</span></a>
+        </li>
+    @endif
 
     <li class="nav-item">
         <a class="nav-link" href="index.html">
             <i class="fas fa-fw fa-object-group"></i>
-            <span>Gruplar</span></a>
+            <span>{{ trans('Groups') }}</span></a>
     </li>
 
     <li class="nav-item">

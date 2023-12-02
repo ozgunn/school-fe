@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Kaptanyuva'),
 
     /*
     |--------------------------------------------------------------------------
@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'env' => env('APP_ENV', 'production'),
+    'env' => env('APP_ENV', 'development'),
 
     /*
     |--------------------------------------------------------------------------
@@ -53,6 +53,9 @@ return [
     */
 
     'url' => env('APP_URL', 'http://localhost'),
+    'apiUrl' => env('API_URL', 'http://localhost:8088'),
+    'apiPrefix' => env('API_PREFIX', '/api'),
+    'userIdentifier' => env('USER_IDENTIFIER', 'phone_number'),
 
     'asset_url' => env('ASSET_URL', null),
 
@@ -80,7 +83,8 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'tr',
+    'languages' => ['tr', 'en'],
 
     /*
     |--------------------------------------------------------------------------
