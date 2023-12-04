@@ -27,11 +27,11 @@
     <link rel="stylesheet" href="{{ asset('css/jquery.toast.min.css') }}">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 
-
     <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
     <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 
 </head>
 
@@ -163,7 +163,7 @@
                                         $(this).remove();
                                     });
 
-                                    Toast("success", "{{ trans('Delete successfully') }}", "");
+                                    Toast("success", "{{ trans('Deleted successfully') }}", "");
 
                                 },
                                 error: function (error) {

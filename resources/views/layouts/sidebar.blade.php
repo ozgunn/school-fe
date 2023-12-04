@@ -44,17 +44,21 @@
         </li>
     @endif
 
-    <li class="nav-item">
-        <a class="nav-link" href="index.html">
-            <i class="fas fa-fw fa-object-group"></i>
-            <span>{{ trans('Groups') }}</span></a>
-    </li>
+    @if(session('user')['role_id'] >= \App\Models\User::ROLE_ADMIN)
+        <li class="nav-item {{ str_contains(request()->path(), 'groups')? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('groups.index') }}">
+                <i class="fas fa-fw fa-object-group"></i>
+                <span>{{ trans('Groups') }}</span></a>
+        </li>
+    @endif
 
-    <li class="nav-item">
-        <a class="nav-link" href="index.html">
-            <i class="fas fa-fw fa-bookmark"></i>
-            <span>Sınıflar</span></a>
-    </li>
+    @if(session('user')['role_id'] >= \App\Models\User::ROLE_ADMIN)
+        <li class="nav-item {{ str_contains(request()->path(), 'classes')? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('classes.index') }}">
+                <i class="fas fa-fw fa-bookmark"></i>
+                <span>{{ trans('Classes') }}</span></a>
+        </li>
+    @endif
 
     <li class="nav-item">
         <a class="nav-link" href="index.html">

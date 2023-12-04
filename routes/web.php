@@ -22,6 +22,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 
     Route::resource('schools', \App\Http\Controllers\SchoolController::class);
+    Route::resource('groups', \App\Http\Controllers\GroupController::class);
+    Route::resource('classes', \App\Http\Controllers\ClassController::class);
 
 });
 

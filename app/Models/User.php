@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Services\ApiService;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -46,4 +47,28 @@ class User extends Authenticatable
     protected $casts = [
         'created_at' => 'datetime',
     ];
+
+    public static function getSchools()
+    {
+        $client = new ApiService();
+        $response = $client->get('admin/schools');
+        $schools = [];
+        if ($response->success) {
+            $schools = $response->data['schools'];
+        }
+
+        return $schools;
+    }
+
+    public static function getGroups()
+    {
+        $client = new ApiService();
+        $response = $client->get('admin/groups');
+        $items = [];
+        if ($response->success) {
+            $items = $response->data['groups'];
+        }
+
+        return $items;
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\ApiService;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\MessageBag;
@@ -11,18 +12,14 @@ class SchoolController extends BaseController
 {
     public function index(Request $request)
     {
-        $client = new ApiService();
-        $response = $client->get('admin/schools');
-        $schools = [];
-        $pagination = [];
-        if ($response->success) {
-            $schools = $response->data['schools'];
-            $pagination = $response->pagination;
-            $pagination['path'] = $request->url();
-        }
+        $schools = User::getSchools();
+//        $pagination = [];
+//        $pagination = $response->pagination;
+//        $pagination['path'] = $request->url();
         $data = [
-            'data' => $this->paginateData($schools, $pagination),
-            'pagination' => $pagination,
+            'data' => $schools,
+//            'data' => $this->paginateData($schools, $pagination),
+//            'pagination' => $pagination,
         ];
 
         return view('schools/index', $data);
@@ -65,6 +62,8 @@ class SchoolController extends BaseController
 
         if ($response->success) {
             $school = $response->data;
+        } else {
+            abort(404);
         }
 
         $data = [
@@ -90,11 +89,8 @@ class SchoolController extends BaseController
             return view('schools/edit')->with('data', $request)->withErrors(new MessageBag($response->errorMsg));
         }
 
-        $data = [
-            'data' => $school,
-        ];
+        return redirect()->route('schools.index');
 
-        return view('schools/edit', $data);
     }
 
     public function destroy(int $id)
@@ -103,10 +99,10 @@ class SchoolController extends BaseController
         $response = $client->delete("admin/schools/{$id}");
 
         if ($response->success) {
-            return response()->json(['success' => true, 'id' => $id ], 200);
+            return response()->json(['success' => true, 'id' => $id], 200);
         }
 
-        return response()->json(['error' => true, 'errorMsg' => $response->errorMsg ], 403);
+        return response()->json(['error' => true, 'errorMsg' => $response->errorMsg], 403);
     }
 
     protected function paginateData($items, $pagination)

@@ -2,6 +2,7 @@
     "Dashboard": "Özet",
     "Schools": "Okullar",
     "Groups": "Gruplar",
+    "Classes": "Sınıflar",
 
     "Create": "Yeni",
     "Delete": "Sil",
@@ -11,6 +12,10 @@
 
     "Update School": "Okul Düzenle",
     "Create School": "Okul Ekle",
+    "Update Group": "Grup Düzenle",
+    "Create Group": "Grup Ekle",
+    "Update Class": "Sınıf Düzenle",
+    "Create Class": "Sınıf Ekle",
     "User": "Kullanıcı",
     "Name": "Adı",
     "E-mail": "E-mail",
@@ -19,6 +24,9 @@
     "Active": "Aktif",
     "Status": "Durumu",
     "Passive": "Pasif",
+    "School": "Okul",
+    "Age Group": "Yaş Grubu",
+    "Group": "Grup",
 
     "Delete Confirmation": "Silme Onayı",
     "Are you sure you want to delete this item?": "Silmek istediğinizden emin misiniz?",
