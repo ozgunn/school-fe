@@ -41,6 +41,23 @@
     </div>
     <div class="form-row">
         <div class="form-group col-md-6">
+            <label for="group_id">{{__('Teacher')}}</label>
+            <select class="form-control" id="teacher_id" name="teacher_id">
+                @if(isset($data['id']))
+                    @foreach($teachers as $teacher)
+                        <option value="{{ $teacher['id'] }}" {{ (isset($data['teacher']) && $teacher['id'] == $data['teacher']['id']) ? "selected" : null  }}>{{ $teacher['name'] }}
+                    @endforeach
+                @else
+                    <option value="">Seçiniz..</option>
+                @endif
+            </select>
+            @error('group_id')
+            <div class="text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
             <label for="name">{{__('Name')}}</label>
             <input type="text" class="form-control" id="name" name="name" value="{{ $data['name'] ?? null }}">
             @error('name')
@@ -60,11 +77,15 @@
 </form>
 <script>
     var groups = {!! json_encode($groups) !!};
+    var teachers = {!! json_encode($teachers) !!};
+
     $('#school_id').on('change', function () {
         var school_id = $(this).val();
 
         var groups = getGroups(school_id);
+        var teachers = getTeachers(school_id);
         updateGroups(groups);
+        updateTeachers(teachers);
     });
 
     function getGroups(school_id) {
@@ -75,6 +96,14 @@
         });
     }
 
+    function getTeachers(school_id) {
+        return teachers.filter(function (i) {
+            return i.school.id == school_id;
+        }).map(function (i) {
+            return i;
+        });
+    }
+
     function updateGroups(groups) {
         $('#group_id').empty();
 
@@ -82,6 +111,16 @@
             $('#group_id').append($('<option>', {
                 value: group.id,
                 text: group.name
+            }));
+        });
+    }
+    function updateTeachers(teachers) {
+        $('#teacher_id').empty();
+
+        $.each(teachers, function (index, i) {
+            $('#teacher_id').append($('<option>', {
+                value: i.id,
+                text: i.name
             }));
         });
     }

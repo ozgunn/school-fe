@@ -24,6 +24,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('schools', \App\Http\Controllers\SchoolController::class);
     Route::resource('groups', \App\Http\Controllers\GroupController::class);
     Route::resource('classes', \App\Http\Controllers\ClassController::class);
+    Route::resource('users', \App\Http\Controllers\UserController::class);
+    Route::resource('teachers', \App\Http\Controllers\TeacherController::class);
+    Route::resource('parents', \App\Http\Controllers\ParentController::class);
+    Route::resource('students', \App\Http\Controllers\StudentController::class);
 
 });
 

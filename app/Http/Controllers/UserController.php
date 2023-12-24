@@ -5,40 +5,43 @@ namespace App\Http\Controllers;
 use App\Http\Services\ApiService;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\MessageBag;
 
-class ClassController extends BaseController
+class UserController extends BaseController
 {
     public function index(Request $request)
     {
         $client = new ApiService();
-        $response = $client->get('admin/classes');
+        $admins = $client->get('admin/users', ['role' => User::ROLE_ADMIN]);
         $items = [];
-        if ($response->success) {
-            $items = $response->data['classes'];
+        if ($admins->success) {
+            $items = $admins->data['users'];
         }
+        $managers = $client->get('admin/users', ['role' => User::ROLE_MANAGER]);
+        if ($managers->success) {
+            $items = array_merge($items, $managers->data['users']);
+        }
+
         $data = [
             'data' => $items,
         ];
 
-        return view('classes/index', $data);
+        return view('users/index', $data);
     }
 
     public function create()
     {
         $schools = User::getSchools();
-        $groups = User::getGroups();
-        $teachers = User::getTeachers();
 
-        return view('classes/create', compact('schools', 'groups', 'teachers'));
+        return view('users/create', compact('schools'));
     }
 
     public function store()
     {
         $request = \request()->all();
         $client = new ApiService();
-        $response = $client->post("admin/classes", $request);
+        dd($request);
+        $response = $client->post("admin/users", $request);
 
         if (!$response->success) {
             session()->flash('error', $response->errorMsg);
@@ -47,7 +50,7 @@ class ClassController extends BaseController
         }
 
         session()->flash('success', __('Created successfully'));
-        return redirect()->route('classes.index');
+        return redirect()->route('users.index');
     }
 
     public function edit(int $id)

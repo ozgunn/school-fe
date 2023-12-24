@@ -5,49 +5,49 @@ namespace App\Http\Controllers;
 use App\Http\Services\ApiService;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\MessageBag;
 
-class ClassController extends BaseController
+class StudentController extends BaseController
 {
     public function index(Request $request)
     {
         $client = new ApiService();
-        $response = $client->get('admin/classes');
+        $users = $client->get('admin/students');
         $items = [];
-        if ($response->success) {
-            $items = $response->data['classes'];
+        if ($users->success) {
+            $items = $users->data['students'];
         }
+
         $data = [
             'data' => $items,
         ];
 
-        return view('classes/index', $data);
+        return view('students/index', $data);
     }
 
     public function create()
     {
         $schools = User::getSchools();
-        $groups = User::getGroups();
-        $teachers = User::getTeachers();
 
-        return view('classes/create', compact('schools', 'groups', 'teachers'));
+        return view('parents/create', compact('schools'));
     }
 
     public function store()
     {
         $request = \request()->all();
-        $client = new ApiService();
-        $response = $client->post("admin/classes", $request);
+        $request['role'] = User::ROLE_PARENT;
+        $request['status'] = $request['status'] ? User::STATUS_ACTIVE : User::STATUS_PENDING;
 
+        $client = new ApiService();
+        $response = $client->post("admin/users", $request);
         if (!$response->success) {
             session()->flash('error', $response->errorMsg);
 
-            return redirect()->back()->withInput()->withErrors(new MessageBag($response->errorMsg));
+            return back()->withInput()->withErrors(new MessageBag($response->errorMsg));
         }
 
         session()->flash('success', __('Created successfully'));
-        return redirect()->route('classes.index');
+        return redirect()->route('teachers.index');
     }
 
     public function edit(int $id)

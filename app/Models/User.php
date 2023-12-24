@@ -12,6 +12,12 @@ class User extends Authenticatable
     const ROLE_MANAGER = 50;
     const ROLE_TEACHER = 20;
     const ROLE_PARENT = 10;
+    const STATUS_ACTIVE = 10;
+    const STATUS_PENDING = 0;
+    const STATUSES = [
+        self::STATUS_PENDING => 'Pending',
+        self::STATUS_ACTIVE => 'Active',
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -67,6 +73,18 @@ class User extends Authenticatable
         $items = [];
         if ($response->success) {
             $items = $response->data['groups'];
+        }
+
+        return $items;
+    }
+
+    public static function getTeachers($school = null)
+    {
+        $client = new ApiService();
+        $response = $client->get('admin/users', ['role' => User::ROLE_TEACHER, 'school_id' => $school]);
+        $items = [];
+        if ($response->success) {
+            $items = $response->data['users'];
         }
 
         return $items;

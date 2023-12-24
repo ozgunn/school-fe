@@ -60,29 +60,37 @@
         </li>
     @endif
 
-    <li class="nav-item">
-        <a class="nav-link" href="index.html">
-            <i class="fas fa-fw fa-user-md"></i>
-            <span>Yöneticiler</span></a>
-    </li>
+    @if(session('user')['role_id'] >= \App\Models\User::ROLE_ADMIN)
+        <li class="nav-item {{ str_contains(request()->path(), 'users')? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('users.index') }}">
+                <i class="fas fa-fw fa-user-md"></i>
+                <span>{{ trans('Users') }}</span></a>
+        </li>
+    @endif
 
-    <li class="nav-item">
-        <a class="nav-link" href="index.html">
-            <i class="fas fa-fw fa-female"></i>
-            <span>Öğretmenler</span></a>
-    </li>
+    @if(session('user')['role_id'] >= \App\Models\User::ROLE_ADMIN)
+        <li class="nav-item {{ str_contains(request()->path(), 'teachers')? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('teachers.index') }}">
+                <i class="fas fa-fw fa-female"></i>
+                <span>{{ trans('Teachers') }}</span></a>
+        </li>
+    @endif
 
-    <li class="nav-item">
-        <a class="nav-link" href="index.html">
-            <i class="fas fa-fw fa-users"></i>
-            <span>Veliler</span></a>
-    </li>
+    @if(session('user')['role_id'] >= \App\Models\User::ROLE_ADMIN)
+        <li class="nav-item {{ str_contains(request()->path(), 'parents')? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('parents.index') }}">
+                <i class="fas fa-fw fa-users"></i>
+                <span>{{ trans('Parents') }}</span></a>
+        </li>
+    @endif
 
-    <li class="nav-item">
-        <a class="nav-link" href="index.html">
-            <i class="fas fa-fw fa-child"></i>
-            <span>Öğrenciler</span></a>
-    </li>
+    @if(session('user')['role_id'] >= \App\Models\User::ROLE_ADMIN)
+        <li class="nav-item {{ str_contains(request()->path(), 'students')? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('students.index') }}">
+                <i class="fas fa-fw fa-child"></i>
+                <span>{{ trans('Students') }}</span></a>
+        </li>
+    @endif
 
     <li class="nav-item">
         <a class="nav-link" href="index.html">

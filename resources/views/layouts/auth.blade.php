@@ -32,7 +32,6 @@
     <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
     <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-
 </head>
 
 <body id="page-top">
@@ -115,9 +114,14 @@
 {{--<script src="{{ asset('js/jquery.toast.min.js') }}"></script>--}}
 <script src="{{ asset('js/main.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.8/jquery.inputmask.min.js"></script>
 
 <script>
     $(document).ready(function () {
+        $('#phone').inputmask('(999) 999 99 99', {
+            placeholder: '(___) ___ __ __',
+            removeMaskOnSubmit: true
+        });
 
         @if(session('success'))
             Toast("success", "{{ session('success') }}", "");
