@@ -1,13 +1,13 @@
 @extends('layouts.auth')
 
-@section('title', trans('Parents'))
+@section('title', trans('Students'))
 
 @section('content')
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">{{ trans('Parents') }}</h1>
-        <a href="{{ route('parents.create') }}" class="btn btn-primary shadow-sm"><i
+        <h1 class="h3 mb-0 text-gray-800">{{ trans('Students') }}</h1>
+        <a href="{{ route('students.create') }}" class="btn btn-primary shadow-sm"><i
                 class="fas fa-plus fa-fw text-white"></i> {{trans('Create')}}</a>
     </div>
 
@@ -17,33 +17,33 @@
         <table class="table display" id="data-table">
             <thead class="table-light">
             <tr>
+                <th>{{__('No')}}</th>
                 <th>{{__('School')}}</th>
+                <th>{{__('Class')}}</th>
                 <th>{{__('Name')}}</th>
-                <th>{{__('Student')}}</th>
-                <th>{{__('Phone')}}</th>
-                <th>{{__('Email')}}</th>
-                <th class="nowrap"></th>
+                <th>{{__('Parent')}}</th>
+                <th>{{__('Morning Bus')}}</th>
+                <th class="text-nowrap">{{__('Evening Bus')}}</th>
+                <th class="text-nowrap"></th>
             </tr>
             </thead>
             <tbody>
             @foreach ($data as $item)
                 <tr>
+                    <td>{{ $item['id'] }}</td>
                     <td>{{ $item['school']['name'] }}</td>
+                    <td>{{ $item['class']['name'] }}</td>
                     <td>{{ $item['name'] }}</td>
-                    <td>
-                        @foreach($item['student'] as $student)
-                            <div>{{ $student['name'] }}</div>
-                        @endforeach
-                    </td>
-                    <td>{{ $item['phone_number'] }}</td>
-                    <td>{{ $item['email'] }}</td>
+                    <td>{{ $item['parent']['name'] }}</td>
+                    <td class="text-nowrap">{{ $item['morning_bus'] ? $item['morning_bus']['license_plate'] : null }}</td>
+                    <td class="text-nowrap">{{ $item['evening_bus'] ? $item['evening_bus']['license_plate'] : null }}</td>
                     <td>
                         <div class="float-right">
-                            <a href="{{ route('parents.edit', ['parent' => $item['id']]) }}" class="edit" title=""
+                            <a href="{{ route('students.edit', ['student' => $item['id']]) }}" class="edit" title=""
                                data-toggle="tooltip" data-original-title="{{trans('Edit')}}">
                                 <i class="fas fa-fw fa-edit"></i>
                             </a>
-                            <a href="{{ route('parents.destroy', ['parent' => $item['id']]) }}" class="delete" title=""
+                            <a href="{{ route('students.destroy', ['student' => $item['id']]) }}" class="delete" title=""
                                data-toggle="tooltip" data-original-title="{{trans('Delete')}}"><i
                                     class="fas fa-fw fa-trash-alt text-danger"></i></a>
                         </div>

@@ -78,6 +78,18 @@ class User extends Authenticatable
         return $items;
     }
 
+    public static function getClasses()
+    {
+        $client = new ApiService();
+        $response = $client->get('admin/classes');
+        $items = [];
+        if ($response->success) {
+            $items = $response->data['classes'];
+        }
+
+        return $items;
+    }
+
     public static function getTeachers($school = null)
     {
         $client = new ApiService();
@@ -88,5 +100,53 @@ class User extends Authenticatable
         }
 
         return $items;
+    }
+
+    public static function getParents($school = null)
+    {
+        $client = new ApiService();
+        $response = $client->get('admin/users', ['role' => User::ROLE_PARENT, 'school_id' => $school, 'minimal' => 1]);
+        $items = [];
+        if ($response->success) {
+            $items = $response->data['users'];
+        }
+
+        return $items;
+    }
+
+    public static function getUser($id)
+    {
+        $client = new ApiService();
+        $response = $client->get("admin/users/{$id}");
+        $item = null;
+        if ($response->success) {
+            $item = $response->data['users'];
+        }
+
+        return $item;
+    }
+
+    public static function getStudents()
+    {
+        $client = new ApiService();
+        $response = $client->get("admin/students");
+        $item = null;
+        if ($response->success) {
+            $item = $response->data['students'];
+        }
+
+        return $item;
+    }
+
+    public static function getBuses($status = null)
+    {
+        $client = new ApiService();
+        $response = $client->get("admin/buses", $status ? ['status' => $status] : null);
+        $item = null;
+        if ($response->success) {
+            $item = $response->data;
+        }
+
+        return $item;
     }
 }

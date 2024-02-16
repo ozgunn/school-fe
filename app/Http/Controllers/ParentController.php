@@ -11,12 +11,7 @@ class ParentController extends BaseController
 {
     public function index(Request $request)
     {
-        $client = new ApiService();
-        $users = $client->get('admin/users', ['role' => User::ROLE_PARENT]);
-        $items = [];
-        if ($users->success) {
-            $items = $users->data['users'];
-        }
+        $items = User::getParents();
 
         $data = [
             'data' => $items,
@@ -47,25 +42,15 @@ class ParentController extends BaseController
         }
 
         session()->flash('success', __('Created successfully'));
-        return redirect()->route('teachers.index');
+        return redirect()->route('parents.index');
     }
 
     public function edit(int $id)
     {
-        $client = new ApiService();
-        $response = $client->get("admin/classes/{$id}");
-
-        if ($response->success) {
-            $data = $response->data;
-        } else {
-            abort(404);
-        }
-
+        $data = User::getUser($id);
         $schools = User::getSchools();
-        $groups = User::getGroups();
-        $teachers = User::getTeachers($data['school']['id']);
 
-        return view('classes/edit', compact('schools', 'groups', 'data', 'teachers'));
+        return view('parents/edit', compact('schools', 'data'));
     }
 
     public function update(int $id)
@@ -73,7 +58,8 @@ class ParentController extends BaseController
         $request = \request()->all();
 
         $client = new ApiService();
-        $response = $client->post("admin/classes/{$id}", $request, "put");
+
+        $response = $client->post("admin/users/{$id}", $request, "put");
 
         if ($response->success) {
             session()->flash('success', __('Updated successfully'));
@@ -83,13 +69,13 @@ class ParentController extends BaseController
             return redirect()->back()->withInput()->withErrors(new MessageBag($response->errorMsg));
         }
 
-        return redirect()->route('classes.index');
+        return redirect()->route('parents.index');
     }
 
     public function destroy(int $id)
     {
         $client = new ApiService();
-        $response = $client->delete("admin/classes/{$id}");
+        $response = $client->delete("admin/users/{$id}");
 
         if ($response->success) {
             return response()->json(['success' => true, 'id' => $id ], 200);

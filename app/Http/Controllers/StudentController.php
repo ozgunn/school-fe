@@ -11,12 +11,7 @@ class StudentController extends BaseController
 {
     public function index(Request $request)
     {
-        $client = new ApiService();
-        $users = $client->get('admin/students');
-        $items = [];
-        if ($users->success) {
-            $items = $users->data['students'];
-        }
+        $items = User::getStudents();
 
         $data = [
             'data' => $items,
@@ -28,18 +23,20 @@ class StudentController extends BaseController
     public function create()
     {
         $schools = User::getSchools();
+        $groups = User::getGroups();
+        $classes = User::getClasses();
+        $teachers = User::getTeachers();
+        $buses = User::getBuses(1);
 
-        return view('parents/create', compact('schools'));
+        return view('students/create', compact('schools', 'groups', 'classes', 'teachers', 'buses'));
     }
 
     public function store()
     {
         $request = \request()->all();
-        $request['role'] = User::ROLE_PARENT;
-        $request['status'] = $request['status'] ? User::STATUS_ACTIVE : User::STATUS_PENDING;
 
         $client = new ApiService();
-        $response = $client->post("admin/users", $request);
+        $response = $client->post("admin/students", $request);
         if (!$response->success) {
             session()->flash('error', $response->errorMsg);
 
@@ -47,7 +44,7 @@ class StudentController extends BaseController
         }
 
         session()->flash('success', __('Created successfully'));
-        return redirect()->route('teachers.index');
+        return redirect()->route('students.index');
     }
 
     public function edit(int $id)
@@ -65,7 +62,7 @@ class StudentController extends BaseController
         $groups = User::getGroups();
         $teachers = User::getTeachers($data['school']['id']);
 
-        return view('classes/edit', compact('schools', 'groups', 'data', 'teachers'));
+        return view('students/edit', compact('schools', 'groups', 'data', 'teachers'));
     }
 
     public function update(int $id)
@@ -83,7 +80,7 @@ class StudentController extends BaseController
             return redirect()->back()->withInput()->withErrors(new MessageBag($response->errorMsg));
         }
 
-        return redirect()->route('classes.index');
+        return redirect()->route('students.index');
     }
 
     public function destroy(int $id)
@@ -92,10 +89,10 @@ class StudentController extends BaseController
         $response = $client->delete("admin/classes/{$id}");
 
         if ($response->success) {
-            return response()->json(['success' => true, 'id' => $id ], 200);
+            return response()->json(['success' => true, 'id' => $id], 200);
         }
 
-        return response()->json(['error' => true, 'errorMsg' => $response->errorMsg ], 403);
+        return response()->json(['error' => true, 'errorMsg' => $response->errorMsg], 403);
     }
 
 }

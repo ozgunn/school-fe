@@ -1,10 +1,11 @@
 <?php
-if(old()) {
-    $data = old();
-}
+//if(old()) {
+//    $data = old();
+//}
+//dd($data);
 ?>
 
-<form action="{{ isset($data['id']) ? route('teachers.update', ['user' => $data['id']]) : route('teachers.store') }}"
+<form action="{{ isset($data['id']) ? route('parents.update', ['parent' => $data['id']]) : route('parents.store') }}"
       method="post">
     @if(isset($data['id']))
         @method('PUT')
@@ -15,7 +16,7 @@ if(old()) {
         <div class="form-group col-md-6">
             <label for="school_id">{{__('School')}}</label>
             <select class="form-control" id="school_id" name="school_id" {{ isset($data['id']) ? 'readonly': null }}>
-                @if(isset($data['id']))
+                @if(false)
                     <option value="{{ $data['school']['id'] }}">{{ $data['school']['name'] }}
                 @else
                     <option value="">Seçiniz..</option>
@@ -33,9 +34,16 @@ if(old()) {
 
     <div class="form-row">
         <div class="form-group col-md-3">
-            <label for="name">{{__('Name')}}</label>
-            <input type="text" class="form-control" id="name" name="name" value="{{ $data['name'] ?? null }}">
-            @error('name')
+            <label for="first_name">{{__('Name')}}</label>
+            <input type="text" class="form-control" id="first_name" name="first_name" value="{{ $data['user_data']['first_name'] ?? null }}">
+            @error('first_name')
+            <div class="text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="form-group col-md-3">
+            <label for="last_name">{{__('Lastname')}}</label>
+            <input type="text" class="form-control" id="last_name" name="last_name" value="{{ $data['user_data']['last_name'] ?? null }}">
+            @error('last_name')
             <div class="text-danger">{{ $message }}</div>
             @enderror
         </div>
@@ -86,7 +94,7 @@ if(old()) {
             <select class="form-control" id="language" name="language">
                 @foreach(config('app.languages') as $lang)
                     <option
-                        value="{{$lang}}" >{{ $lang }}</option>
+                        value="{{$lang}}" {{ (isset($data['language']) && $data['language']==$lang) ? 'selected' : null }}>{{ $lang }}</option>
                 @endforeach
             </select>
             @error('language')
@@ -97,7 +105,7 @@ if(old()) {
             <div class="custom-control custom-switch">
                 <input type="hidden" name="status" value="0">
                 <input type="checkbox" class="custom-control-input" name="status" id="status"
-                       {{ isset($data['status']) && $data['status'] ? 'checked' : '' }} value="1">
+                       {{ isset($data['status']) && $data['status'] ? 'checked' : '' }} value="{{ \App\Models\User::STATUS_ACTIVE }}">
                 <label class="custom-control-label" for="status">{{__('Active')}}</label>
             </div>
         </div>

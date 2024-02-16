@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\ApiService;
+use App\Http\Services\SiteService;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
@@ -11,12 +12,7 @@ class TeacherController extends BaseController
 {
     public function index(Request $request)
     {
-        $client = new ApiService();
-        $users = $client->get('admin/users', ['role' => User::ROLE_TEACHER]);
-        $items = [];
-        if ($users->success) {
-            $items = $users->data['users'];
-        }
+        $items = User::getTeachers();
 
         $data = [
             'data' => $items,
@@ -28,8 +24,10 @@ class TeacherController extends BaseController
     public function create()
     {
         $schools = User::getSchools();
+        $groups = User::getGroups();
+        //$schools = SiteService::getSchoolsFromClasses($classes);
 
-        return view('teachers/create', compact('schools'));
+        return view('teachers/create', compact('schools', 'groups'));
     }
 
     public function store()
@@ -52,20 +50,10 @@ class TeacherController extends BaseController
 
     public function edit(int $id)
     {
-        $client = new ApiService();
-        $response = $client->get("admin/classes/{$id}");
-
-        if ($response->success) {
-            $data = $response->data;
-        } else {
-            abort(404);
-        }
-
         $schools = User::getSchools();
-        $groups = User::getGroups();
-        $teachers = User::getTeachers($data['school']['id']);
+        $data = User::getUser($id);
 
-        return view('classes/edit', compact('schools', 'groups', 'data', 'teachers'));
+        return view('teachers/edit', compact('schools', 'data'));
     }
 
     public function update(int $id)
@@ -73,7 +61,7 @@ class TeacherController extends BaseController
         $request = \request()->all();
 
         $client = new ApiService();
-        $response = $client->post("admin/classes/{$id}", $request, "put");
+        $response = $client->post("admin/users/{$id}", $request, "put");
 
         if ($response->success) {
             session()->flash('success', __('Updated successfully'));
@@ -83,7 +71,7 @@ class TeacherController extends BaseController
             return redirect()->back()->withInput()->withErrors(new MessageBag($response->errorMsg));
         }
 
-        return redirect()->route('classes.index');
+        return redirect()->route('teachers.index');
     }
 
     public function destroy(int $id)

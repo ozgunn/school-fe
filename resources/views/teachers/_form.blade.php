@@ -4,32 +4,14 @@ if(old()) {
 }
 ?>
 
-<form action="{{ isset($data['id']) ? route('teachers.update', ['user' => $data['id']]) : route('teachers.store') }}"
+<form action="{{ isset($data['id']) ? route('teachers.update', ['teacher' => $data['id']]) : route('teachers.store') }}"
       method="post">
     @if(isset($data['id']))
         @method('PUT')
     @endif
     @csrf
     <input type="hidden" name="id" value="{{ $data['id'] ?? null }}">
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            <label for="school_id">{{__('School')}}</label>
-            <select class="form-control" id="school_id" name="school_id" {{ isset($data['id']) ? 'readonly': null }}>
-                @if(isset($data['id']))
-                    <option value="{{ $data['school']['id'] }}">{{ $data['school']['name'] }}
-                @else
-                    <option value="">Seçiniz..</option>
-                    @foreach($schools as $school)
-                        <option
-                            value="{{$school['id']}}" {{ (isset($data['school']['id']) && $data['school']['id'] == $school['id']) || old('school_id')==$school['id'] ? 'selected' : null  }}>{{ $school['name'] }}</option>
-                    @endforeach
-                @endif
-            </select>
-            @error('school_id')
-            <div class="text-danger">{{ $message }}</div>
-            @enderror
-        </div>
-    </div>
+    @include('../includes/school-class-selector')
 
     <div class="form-row">
         <div class="form-group col-md-3">
@@ -86,7 +68,7 @@ if(old()) {
             <select class="form-control" id="language" name="language">
                 @foreach(config('app.languages') as $lang)
                     <option
-                        value="{{$lang}}" >{{ $lang }}</option>
+                        value="{{$lang}}" {{ (isset($data['language']) && $data['language']==$lang) ? 'selected' : null }}>{{ $lang }}</option>
                 @endforeach
             </select>
             @error('language')
@@ -97,7 +79,7 @@ if(old()) {
             <div class="custom-control custom-switch">
                 <input type="hidden" name="status" value="0">
                 <input type="checkbox" class="custom-control-input" name="status" id="status"
-                       {{ isset($data['status']) && $data['status'] ? 'checked' : '' }} value="1">
+                       {{ isset($data['status']) && $data['status'] ? 'checked' : '' }} value="{{ \App\Models\User::STATUS_ACTIVE }}">
                 <label class="custom-control-label" for="status">{{__('Active')}}</label>
             </div>
         </div>
