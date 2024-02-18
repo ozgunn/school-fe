@@ -22,6 +22,7 @@
                 <th>{{__('Student')}}</th>
                 <th>{{__('Phone')}}</th>
                 <th>{{__('Email')}}</th>
+                <th class="nowrap">{{__('created_at')}}</th>
                 <th class="nowrap"></th>
             </tr>
             </thead>
@@ -37,6 +38,7 @@
                     </td>
                     <td>{{ $item['phone_number'] }}</td>
                     <td>{{ $item['email'] }}</td>
+                    <td>{{ \Illuminate\Support\Carbon::parse($item['created_at'])->format("Y-m-d H:i")  }}</td>
                     <td class="nowrap">
                         <div class="float-right text-nowrap">
                             <a href="{{ route('parents.edit', ['parent' => $item['id']]) }}" class="edit" title=""
@@ -58,7 +60,8 @@
                 $('#data-table').DataTable({
                     language: {
                         url: "{{ asset('js/dataTables-tr.json') }}"
-                    }
+                    },
+                    order: [[1, 'asc']]
                 });
             });
         </script>

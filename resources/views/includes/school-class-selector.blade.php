@@ -1,16 +1,12 @@
 <div class="form-row">
     <div class="form-group col-md-6">
         <label for="school_id">{{__('School')}}</label>
-        <select class="form-control" id="school_id" name="school_id" {{ isset($data['id']) ? 'readonly': null }}>
-            @if(isset($data['school']['id']))
-                <option value="{{ $data['school']['id'] }}">{{ $data['school']['name'] }}
-            @else
+        <select class="form-control" id="school_id" name="school_id">
                 <option value="">{{__('Select')}}</option>
                 @foreach($schools as $school)
                     <option
                         value="{{$school['id']}}" {{ isset($data['school']['id']) && $data['school']['id'] == $school['id'] ? 'selected' : null  }}>{{ $school['name'] }}</option>
                 @endforeach
-            @endif
         </select>
         @error('school_id')
         <div class="text-danger">{{ $message }}</div>
@@ -21,11 +17,10 @@
 <div class="form-row">
     <div class="form-group col-md-6">
         <label for="group_id">{{__('Group')}}</label>
-        <select class="form-control" id="group_id" name="group_id" {{ isset($data['id']) ? 'readonly': null }}>
-            @if(isset($data['group']['id']))
-                <option value="{{ $data['group']['id'] }}">{{ $data['group']['name'] }}
-            @else
-                <option value="">{{__('Select')}}</option>
+        <select class="form-control" id="group_id" name="group_id">
+            <option value="">{{__('Select')}}</option>
+            @if(isset($data['id']) && !empty($data['group']))
+                <option value="{{ $data['group']['id'] }}" selected>{{ $data['group']['name'] }}</option>
             @endif
         </select>
         @error('group_id')
@@ -39,13 +34,9 @@
         <div class="form-group col-md-6">
             <label for="class_id">{{__('Class')}}</label>
             <select class="form-control" id="class_id" name="class_id">
-                @if(isset($data['id']))
-                    @foreach($classes as $cls)
-                        <option
-                            value="{{ $cls['id'] }}" {{ (isset($data['class']) && $cls['id'] == $data['class']['id']) ? "selected" : null  }}>{{ $cls['name'] }}
-                    @endforeach
-                @else
-                    <option value="">{{__('Select')}}</option>
+                <option value="">{{__('Select')}}</option>
+                @if(isset($data['id']) && !empty($data['class']))
+                    <option value="{{ $data['class_id'] }}" selected>{{ $data['class']['name'] }}</option>
                 @endif
             </select>
             @error('class_id')
@@ -58,8 +49,8 @@
 <div class="form-row">
     <div class="form-group col-md-6">
         <label for="teacher_id">{{__('Teacher')}}</label>
-        <select class="form-control" id="teacher_id" name="teacher_id" readonly="true">
-            @if(isset($data['id']))
+        <select class="form-control" id="teacher_id" name="teacher_id">
+            @if(isset($data['id']) && !empty($data['teacher']))
                 @foreach($teachers as $teacher)
                     <option
                         value="{{ $teacher['id'] }}" {{ (isset($data['teacher']) && $teacher['id'] == $data['teacher']['id']) ? "selected" : null  }}>{{ $teacher['name'] }}
@@ -76,11 +67,13 @@
     var groups = {!! isset($groups) ? json_encode($groups) : 'null' !!};
     var teachers = {!! isset($teachers) ? json_encode($teachers) : 'null' !!};
     var classes = {!! isset($classes) ? json_encode($classes) : 'null' !!};
-    var selectOption = {!! "\"<option value=''>". __('Select') . "</option>\""; !!}
+    var data = {!! isset($data) ? json_encode($data) : 'null' !!};
+    var selectOption = {!! "\"<option value=''>". __('Select') . "</option>\""; !!};
+    var school_id = $('#school_id').val();
+    var group_id = $('#group_id').val();
 
     $('#school_id').on('change', function () {
-        var school_id = $(this).val();
-
+        school_id = $(this).val();
         if (groups) {
             updateGroups(getGroups(school_id));
         }
@@ -89,9 +82,13 @@
         }
     });
 
+    if(school_id) {
+        $('#school_id').trigger('change');
+    }
+
     $('#group_id').on('change', function () {
-        var group_id = $(this).val();
-        var school_id = $('#school_id').val();
+        group_id = $(this).val();
+        school_id = $('#school_id').val();
 
         if (classes) {
             updateClasses(getClasses(group_id));
@@ -103,11 +100,9 @@
 
     $('#class_id').on('change', function () {
         var class_id = $(this).val();
-        var school_id = $('#school_id').val();
-        var teacher_id = $('#teacher_id');
 
         if (teachers) {
-            updateTeachers(getTeachers(class_id));
+            //updateTeachers(getTeachers(class_id));
         }
     });
 
@@ -129,7 +124,7 @@
 
     function getTeachers(school_id) {
         return teachers.filter(function (i) {
-            return i.class?.id == school_id;
+            return i.school?.id == school_id;
         }).map(function (i) {
             return i;
         });
@@ -137,11 +132,11 @@
 
     function updateGroups(groups) {
         $('#group_id').empty().append(selectOption);
-
         $.each(groups, function (index, group) {
             $('#group_id').append($('<option>', {
                 value: group.id,
-                text: group.name
+                text: group.name,
+                selected: data && (group.id === data.group.id)
             }));
         });
     }
@@ -151,7 +146,8 @@
         $.each(classes, function (index, cls) {
             $('#class_id').append($('<option>', {
                 value: cls.id,
-                text: cls.name
+                text: cls.name,
+                selected: data && (cls.id === data.class.id)
             }));
         });
     }

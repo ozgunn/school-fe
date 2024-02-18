@@ -25,10 +25,10 @@ class StudentController extends BaseController
         $schools = User::getSchools();
         $groups = User::getGroups();
         $classes = User::getClasses();
-        $teachers = User::getTeachers();
         $buses = User::getBuses(1);
+        $parents = User::getParents();
 
-        return view('students/create', compact('schools', 'groups', 'classes', 'teachers', 'buses'));
+        return view('students/create', compact('schools', 'groups', 'classes', 'buses', 'parents'));
     }
 
     public function store()
@@ -40,7 +40,7 @@ class StudentController extends BaseController
         if (!$response->success) {
             session()->flash('error', $response->errorMsg);
 
-            return back()->withInput()->withErrors(new MessageBag($response->errorMsg));
+            return back()->withInput()->withErrors(new MessageBag([$response->errorMsg]));
         }
 
         session()->flash('success', __('Created successfully'));
@@ -50,7 +50,7 @@ class StudentController extends BaseController
     public function edit(int $id)
     {
         $client = new ApiService();
-        $response = $client->get("admin/classes/{$id}");
+        $response = $client->get("admin/students/{$id}");
 
         if ($response->success) {
             $data = $response->data;
@@ -60,9 +60,11 @@ class StudentController extends BaseController
 
         $schools = User::getSchools();
         $groups = User::getGroups();
-        $teachers = User::getTeachers($data['school']['id']);
+        $classes = User::getClasses();
+        $buses = User::getBuses(1);
+        $parents = User::getParents();
 
-        return view('students/edit', compact('schools', 'groups', 'data', 'teachers'));
+        return view('students/edit', compact('schools', 'data', 'groups', 'classes', 'buses', 'parents'));
     }
 
     public function update(int $id)
@@ -70,14 +72,14 @@ class StudentController extends BaseController
         $request = \request()->all();
 
         $client = new ApiService();
-        $response = $client->post("admin/classes/{$id}", $request, "put");
+        $response = $client->post("admin/students/{$id}", $request, "put");
 
         if ($response->success) {
             session()->flash('success', __('Updated successfully'));
         } else {
             session()->flash('error', $response->errorMsg);
 
-            return redirect()->back()->withInput()->withErrors(new MessageBag($response->errorMsg));
+            return redirect()->back()->withInput()->withErrors(new MessageBag([$response->errorMsg]));
         }
 
         return redirect()->route('students.index');
@@ -86,7 +88,7 @@ class StudentController extends BaseController
     public function destroy(int $id)
     {
         $client = new ApiService();
-        $response = $client->delete("admin/classes/{$id}");
+        $response = $client->delete("admin/students/{$id}");
 
         if ($response->success) {
             return response()->json(['success' => true, 'id' => $id], 200);

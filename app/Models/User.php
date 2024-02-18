@@ -93,7 +93,7 @@ class User extends Authenticatable
     public static function getTeachers($school = null)
     {
         $client = new ApiService();
-        $response = $client->get('admin/users', ['role' => User::ROLE_TEACHER, 'school_id' => $school]);
+        $response = $client->get('admin/users', ['role' => User::ROLE_TEACHER, 'school_id' => $school, 'order' => 'name']);
         $items = [];
         if ($response->success) {
             $items = $response->data['users'];
@@ -105,7 +105,7 @@ class User extends Authenticatable
     public static function getParents($school = null)
     {
         $client = new ApiService();
-        $response = $client->get('admin/users', ['role' => User::ROLE_PARENT, 'school_id' => $school, 'minimal' => 1]);
+        $response = $client->get('admin/users', ['role' => User::ROLE_PARENT, 'school_id' => $school, 'minimal' => 1, 'order' => 'name']);
         $items = [];
         if ($response->success) {
             $items = $response->data['users'];
@@ -129,7 +129,7 @@ class User extends Authenticatable
     public static function getStudents()
     {
         $client = new ApiService();
-        $response = $client->get("admin/students");
+        $response = $client->get("admin/students", ['order' => 'id', 'sort' => 'desc']);
         $item = null;
         if ($response->success) {
             $item = $response->data['students'];

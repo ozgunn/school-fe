@@ -98,11 +98,13 @@
             <span>Duyurular</span></a>
     </li>
 
-    <li class="nav-item">
-        <a class="nav-link" href="index.html">
-            <i class="fas fa-fw fa-bus"></i>
-            <span>Servisler</span></a>
-    </li>
+    @if(session('user')['role_id'] >= \App\Models\User::ROLE_ADMIN)
+        <li class="nav-item {{ str_contains(request()->path(), 'buses')? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('buses.index') }}">
+                <i class="fas fa-fw fa-child"></i>
+                <span>{{ trans('Buses') }}</span></a>
+        </li>
+    @endif
 
     <li class="nav-item">
         <a class="nav-link" href="index.html">

@@ -24,10 +24,10 @@ class TeacherController extends BaseController
     public function create()
     {
         $schools = User::getSchools();
-        $groups = User::getGroups();
+        //$groups = User::getGroups();
         //$schools = SiteService::getSchoolsFromClasses($classes);
 
-        return view('teachers/create', compact('schools', 'groups'));
+        return view('teachers/create', compact('schools'));
     }
 
     public function store()
@@ -41,7 +41,7 @@ class TeacherController extends BaseController
         if (!$response->success) {
             session()->flash('error', $response->errorMsg);
 
-            return back()->withInput()->withErrors(new MessageBag($response->errorMsg));
+            return back()->withInput()->withErrors(new MessageBag([$response->errorMsg]));
         }
 
         session()->flash('success', __('Created successfully'));
@@ -68,7 +68,7 @@ class TeacherController extends BaseController
         } else {
             session()->flash('error', $response->errorMsg);
 
-            return redirect()->back()->withInput()->withErrors(new MessageBag($response->errorMsg));
+            return redirect()->back()->withInput()->withErrors(new MessageBag([$response->errorMsg]));
         }
 
         return redirect()->route('teachers.index');

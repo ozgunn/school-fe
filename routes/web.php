@@ -28,6 +28,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('teachers', \App\Http\Controllers\TeacherController::class);
     Route::resource('parents', \App\Http\Controllers\ParentController::class);
     Route::resource('students', \App\Http\Controllers\StudentController::class);
+    Route::resource('buses', \App\Http\Controllers\BusController::class);
 
 });
 

@@ -46,7 +46,7 @@ class UserController extends BaseController
         if (!$response->success) {
             session()->flash('error', $response->errorMsg);
 
-            return redirect()->back()->withInput()->withErrors(new MessageBag($response->errorMsg));
+            return redirect()->back()->withInput()->withErrors(new MessageBag([$response->errorMsg]));
         }
 
         session()->flash('success', __('Created successfully'));
@@ -83,7 +83,7 @@ class UserController extends BaseController
         } else {
             session()->flash('error', $response->errorMsg);
 
-            return redirect()->back()->withInput()->withErrors(new MessageBag($response->errorMsg));
+            return redirect()->back()->withInput()->withErrors(new MessageBag([$response->errorMsg]));
         }
 
         return redirect()->route('classes.index');

@@ -48,7 +48,7 @@ class SchoolController extends BaseController
         if (!$response->success) {
             session()->flash('error', $response->errorMsg);
 
-            return view('schools/create')->with('data', $request)->withErrors(new MessageBag($response->errorMsg));
+            return view('schools/create')->with('data', $request)->withErrors(new MessageBag([$response->errorMsg]));
         }
 
         session()->flash('success', __('Created successfully'));
@@ -86,7 +86,7 @@ class SchoolController extends BaseController
         } else {
             session()->flash('error', $response->errorMsg);
 
-            return view('schools/edit')->with('data', $request)->withErrors(new MessageBag($response->errorMsg));
+            return view('schools/edit')->with('data', $request)->withErrors(new MessageBag([$response->errorMsg]));
         }
 
         return redirect()->route('schools.index');
