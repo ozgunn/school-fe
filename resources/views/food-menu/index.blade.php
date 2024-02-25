@@ -55,7 +55,8 @@
             $(document).ready(function () {
                 $('#data-table').DataTable({
                     language: {
-                        url: "{{ asset('js/dataTables-tr.json') }}"
+                        url: "{{ asset('js/dataTables-tr.json') }}",
+                        order: [[0, 'desc']]
                     }
                 });
             });
