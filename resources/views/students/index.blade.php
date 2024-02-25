@@ -34,7 +34,7 @@
                     <td>{{ $item['school']['name'] }}</td>
                     <td>{{ $item['class']['name'] }}</td>
                     <td>{{ $item['name'] }}</td>
-                    <td>{{ $item['parent']['name'] }}</td>
+                    <td><a href="{{ route('parents.edit', ['parent' => $item['parent']['id']]) }}">{{ $item['parent']['name'] }}</a></td>
                     <td class="text-nowrap">{{ $item['morning_bus'] ? $item['morning_bus']['license_plate'] : null }}</td>
                     <td class="text-nowrap">{{ $item['evening_bus'] ? $item['evening_bus']['license_plate'] : null }}</td>
                     <td class="text-nowrap">

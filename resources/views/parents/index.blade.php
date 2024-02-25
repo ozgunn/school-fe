@@ -33,7 +33,7 @@
                     <td>{{ $item['name'] }}</td>
                     <td>
                         @foreach($item['student'] as $student)
-                            <div>{{ $student['name'] }}</div>
+                            <div><a href="{{ route('students.edit', ['student' => $student['id']]) }}">{{ $student['name'] }}</a></div>
                         @endforeach
                     </td>
                     <td>{{ $item['phone_number'] }}</td>
