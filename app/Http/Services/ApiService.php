@@ -3,6 +3,7 @@
 namespace App\Http\Services;
 
 use App\Models\ApiResponse;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\HttpKernel\Exception\NotAcceptableHttpException;
 
@@ -39,6 +40,15 @@ class ApiService
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $this->token,
         ]);
+
+        /** @var UploadedFile $pdf */
+        if ($pdf = $data['pdf']) {
+//            $pdf2 = $pdf->store('temp');
+//            $pdf3 = file_get_contents(storage_path('app/' . $pdf2));
+            $pdfEncoded = mb_convert_encoding($pdf->getContent(), 'UTF-8', 'auto');
+            $response = $response->asMultipart()->attach('pdf', $pdf->getContent(), $pdf->getClientOriginalName(), ['Content-Type' => 'application/pdf']);
+        }
+
         if ($method == 'put')
             $response = $response->put($url, $data);
         else

@@ -106,11 +106,13 @@
         </li>
     @endif
 
-    <li class="nav-item">
-        <a class="nav-link" href="index.html">
-            <i class="fas fa-fw fa-newspaper"></i>
-            <span>Gazeteler</span></a>
-    </li>
+    @if(session('user')['role_id'] >= \App\Models\User::ROLE_ADMIN)
+        <li class="nav-item {{ str_contains(request()->path(), 'files')? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('files.index') }}">
+                <i class="fas fa-fw fa-child"></i>
+                <span>{{ trans('Files') }}</span></a>
+        </li>
+    @endif
 
     <li class="nav-item">
         <a class="nav-link" href="index.html">

@@ -173,4 +173,16 @@ class User extends Authenticatable
 
         return $item;
     }
+
+    public static function getFiles($type = null)
+    {
+        $client = new ApiService();
+        $response = $client->get("admin/files", $type ? ['type' => $type] : null);
+        $item = null;
+        if ($response->success) {
+            $item = $response->data;
+        }
+
+        return $item;
+    }
 }

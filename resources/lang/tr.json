@@ -9,12 +9,15 @@
     "Students": "Öğrenciler",
     "Buses": "Servisler",
     "Food Menu": "Yemek Listesi",
+    "Files": "Gazeteler",
 
     "Create": "Yeni",
     "Delete": "Sil",
     "Confirm": "Onayla",
     "Cancel": "Vazgeç",
     "Save": "Kaydet",
+    "Edit": "Düzenle",
+    "View": "Göster",
 
     "Update School": "Okul Düzenle",
     "Create School": "Okul Ekle",
@@ -34,6 +37,8 @@
     "Create Bus": "Servis Ekle",
     "Create Food Menu": "Yemek Listesi Ekle",
     "Update Food Menu": "Yemek Listesi Düzenle",
+    "Create File": "Gazete Ekle",
+    "Update File": "Gazete Düzenle",
 
     "User": "Kullanıcı",
     "Name": "Adı",
@@ -70,6 +75,10 @@
     "Snack Time": "Akşam",
     "Day": "Gün",
     "Language": "Dil",
+    "Newspaper Type": "Gazete Tipi",
+    "Publish Date": "Yayın Tarihi",
+    "Parent Newspaper": "Veli Gazetesi",
+    "Group Newspaper": "Grup Gazetesi",
 
     "Delete Confirmation": "Silme Onayı",
     "Are you sure you want to delete this item?": "Silmek istediğinizden emin misiniz?",
