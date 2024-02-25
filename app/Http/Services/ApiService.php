@@ -42,7 +42,7 @@ class ApiService
         ]);
 
         /** @var UploadedFile $pdf */
-        if ($pdf = $data['pdf']) {
+        if (isset($data['pdf']) && $pdf = $data['pdf']) {
 //            $pdf2 = $pdf->store('temp');
 //            $pdf3 = file_get_contents(storage_path('app/' . $pdf2));
             $pdfEncoded = mb_convert_encoding($pdf->getContent(), 'UTF-8', 'auto');
