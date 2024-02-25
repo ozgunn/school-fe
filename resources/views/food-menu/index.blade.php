@@ -56,8 +56,8 @@
                 $('#data-table').DataTable({
                     language: {
                         url: "{{ asset('js/dataTables-tr.json') }}",
-                        order: [[0, 'desc']]
-                    }
+                    },
+                    order: [[0, 'desc']]
                 });
             });
         </script>
