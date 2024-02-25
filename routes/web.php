@@ -29,6 +29,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('parents', \App\Http\Controllers\ParentController::class);
     Route::resource('students', \App\Http\Controllers\StudentController::class);
     Route::resource('buses', \App\Http\Controllers\BusController::class);
+    Route::resource('food-menu', \App\Http\Controllers\FoodMenuController::class);
 
 });
 

@@ -130,11 +130,13 @@
             <span>Resimler</span></a>
     </li>
 
-    <li class="nav-item">
-        <a class="nav-link" href="index.html">
-            <i class="fas fa-fw fa-utensils"></i>
-            <span>Yemek Takvimi</span></a>
-    </li>
+    @if(session('user')['role_id'] >= \App\Models\User::ROLE_ADMIN)
+        <li class="nav-item {{ str_contains(request()->path(), 'food-menu')? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('food-menu.index') }}">
+                <i class="fas fa-fw fa-child"></i>
+                <span>{{ trans('Food Menu') }}</span></a>
+        </li>
+    @endif
 
     <li class="nav-item">
         <a class="nav-link" href="index.html">

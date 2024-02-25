@@ -12,6 +12,13 @@ class User extends Authenticatable
     const ROLE_MANAGER = 50;
     const ROLE_TEACHER = 20;
     const ROLE_PARENT = 10;
+
+    const ROLES_MANAGERS = [
+        self::ROLE_SUPERADMIN => 'superadmin',
+        self::ROLE_ADMIN => 'admin',
+        self::ROLE_MANAGER => 'manager',
+    ];
+
     const STATUS_ACTIVE = 10;
     const STATUS_PENDING = 0;
     const STATUSES = [
@@ -53,6 +60,11 @@ class User extends Authenticatable
     protected $casts = [
         'created_at' => 'datetime',
     ];
+
+    public static function getUserInfo()
+    {
+        return session('user');
+    }
 
     public static function getSchools()
     {
@@ -142,6 +154,18 @@ class User extends Authenticatable
     {
         $client = new ApiService();
         $response = $client->get("admin/buses", $status ? ['status' => $status] : null);
+        $item = null;
+        if ($response->success) {
+            $item = $response->data;
+        }
+
+        return $item;
+    }
+
+    public static function getFoodMenu($school = null)
+    {
+        $client = new ApiService();
+        $response = $client->get("admin/food-menu", $school ? ['school' => $school] : null);
         $item = null;
         if ($response->success) {
             $item = $response->data;

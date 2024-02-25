@@ -32,15 +32,17 @@ class UserController extends BaseController
     public function create()
     {
         $schools = User::getSchools();
+        $roles = User::ROLES_MANAGERS;
+        $user = User::getUserInfo();
 
-        return view('users/create', compact('schools'));
+        return view('users/create', compact('schools', 'roles', 'user'));
     }
 
     public function store()
     {
         $request = \request()->all();
         $client = new ApiService();
-        dd($request);
+
         $response = $client->post("admin/users", $request);
 
         if (!$response->success) {
@@ -56,19 +58,19 @@ class UserController extends BaseController
     public function edit(int $id)
     {
         $client = new ApiService();
-        $response = $client->get("admin/classes/{$id}");
+        $response = $client->get("admin/users/{$id}");
 
         if ($response->success) {
-            $data = $response->data;
+            $data = $response->data['users'];
         } else {
             abort(404);
         }
 
         $schools = User::getSchools();
-        $groups = User::getGroups();
-        $teachers = User::getTeachers($data['school']['id']);
+        $roles = User::ROLES_MANAGERS;
+        $user = User::getUserInfo();
 
-        return view('classes/edit', compact('schools', 'groups', 'data', 'teachers'));
+        return view('users/edit', compact('schools', 'schools', 'data', 'user', 'roles'));
     }
 
     public function update(int $id)
