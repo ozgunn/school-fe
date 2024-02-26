@@ -19,9 +19,10 @@
         <label for="group_id">{{__('Group')}}</label>
         <select class="form-control" id="group_id" name="group_id">
             <option value="">{{__('Select')}}</option>
-            @if(isset($data['id']) && !empty($data['group']))
-                <option value="{{ $data['group']['id'] }}" selected>{{ $data['group']['name'] }}</option>
-            @endif
+            @foreach($groups as $group)
+                <option
+                    value="{{$group['id']}}" {{ isset($data['group_id']) && $data['group_id'] == $group['id'] ? 'selected' : null  }}>{{ $group['name'] }}</option>
+            @endforeach
         </select>
         @error('group_id')
         <div class="text-danger">{{ $message }}</div>
@@ -131,6 +132,7 @@
     }
 
     function updateGroups(groups) {
+        return;
         $('#group_id').empty().append(selectOption);
         $.each(groups, function (index, group) {
             $('#group_id').append($('<option>', {
