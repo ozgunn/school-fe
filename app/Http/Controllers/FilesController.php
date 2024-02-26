@@ -89,7 +89,7 @@ class FilesController extends BaseController
     public function destroy(int $id)
     {
         $client = new ApiService();
-        $response = $client->delete("admin/food-menu/{$id}");
+        $response = $client->delete("admin/files/{$id}");
 
         if ($response->success) {
             return response()->json(['success' => true, 'id' => $id], 200);
