@@ -93,7 +93,7 @@
     @endif
 
     @if(session('user')['role_id'] >= \App\Models\User::ROLE_ADMIN)
-        <li class="nav-item {{ str_contains(request()->path(), 'files')? 'active' : '' }}">
+        <li class="nav-item {{ str_contains(request()->path(), 'announcements')? 'active' : '' }}">
             <a class="nav-link" href="{{ route('announcements.index') }}">
                 <i class="fas fa-fw fa-bullhorn"></i>
                 <span>{{ trans('Announcements') }}</span></a>
