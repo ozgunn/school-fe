@@ -92,16 +92,18 @@
         </li>
     @endif
 
-    <li class="nav-item">
-        <a class="nav-link" href="index.html">
-            <i class="fas fa-fw fa-bullhorn"></i>
-            <span>Duyurular</span></a>
-    </li>
+    @if(session('user')['role_id'] >= \App\Models\User::ROLE_ADMIN)
+        <li class="nav-item {{ str_contains(request()->path(), 'files')? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('announcements.index') }}">
+                <i class="fas fa-fw fa-bullhorn"></i>
+                <span>{{ trans('Announcements') }}</span></a>
+        </li>
+    @endif
 
     @if(session('user')['role_id'] >= \App\Models\User::ROLE_ADMIN)
         <li class="nav-item {{ str_contains(request()->path(), 'buses')? 'active' : '' }}">
             <a class="nav-link" href="{{ route('buses.index') }}">
-                <i class="fas fa-fw fa-child"></i>
+                <i class="fas fa-fw fa-bus"></i>
                 <span>{{ trans('Buses') }}</span></a>
         </li>
     @endif
@@ -109,7 +111,7 @@
     @if(session('user')['role_id'] >= \App\Models\User::ROLE_ADMIN)
         <li class="nav-item {{ str_contains(request()->path(), 'files')? 'active' : '' }}">
             <a class="nav-link" href="{{ route('files.index') }}">
-                <i class="fas fa-fw fa-child"></i>
+                <i class="fas fa-fw fa-newspaper"></i>
                 <span>{{ trans('Files') }}</span></a>
         </li>
     @endif
@@ -135,7 +137,7 @@
     @if(session('user')['role_id'] >= \App\Models\User::ROLE_ADMIN)
         <li class="nav-item {{ str_contains(request()->path(), 'food-menu')? 'active' : '' }}">
             <a class="nav-link" href="{{ route('food-menu.index') }}">
-                <i class="fas fa-fw fa-child"></i>
+                <i class="fas fa-fw fa-utensils"></i>
                 <span>{{ trans('Food Menu') }}</span></a>
         </li>
     @endif

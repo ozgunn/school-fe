@@ -7,18 +7,17 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
 
-class StudentController extends BaseController
+class AnnouncementController extends BaseController
 {
     public function index(Request $request)
     {
-        $class = $request->get('class_id');
-        $items = User::getStudents($class);
+        $items = User::getAnnouncements();
 
         $data = [
             'data' => $items,
         ];
 
-        return view('students/index', $data);
+        return view('announcements/index', $data);
     }
 
     public function create()

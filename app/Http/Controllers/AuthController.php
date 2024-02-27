@@ -25,10 +25,20 @@ class AuthController extends BaseController
                     return view('login', ['error' => 'Access denied']);
                 }
 
+                $schools = collect($response->data['schools'])->mapWithKeys(function ($item) {
+                    return [$item['id'] => $item['name']];
+                })->toArray();
+
+                $groups = collect($response->data['groups'])->mapWithKeys(function ($item) {
+                    return [$item['id'] => $item['name']];
+                })->toArray();
+
                 $userData = [
                     'token' => $response->data['token'],
                     'user' => $response->data['user'],
                     'company' => $response->data['user']['company'],
+                    'schools' => $schools,
+                    'groups' => $groups,
                 ];
                 session($userData);
 

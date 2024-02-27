@@ -138,10 +138,11 @@ class User extends Authenticatable
         return $item;
     }
 
-    public static function getStudents()
+    public static function getStudents($class = null)
     {
         $client = new ApiService();
-        $response = $client->get("admin/students", ['order' => 'id', 'sort' => 'desc']);
+        $params = $class ? ['class_id' => $class] : [];
+        $response = $client->get("admin/students", array_merge($params, ['order' => 'id', 'sort' => 'desc']));
         $item = null;
         if ($response->success) {
             $item = $response->data['students'];
@@ -178,6 +179,18 @@ class User extends Authenticatable
     {
         $client = new ApiService();
         $response = $client->get("admin/files", $type ? ['type' => $type] : null);
+        $item = null;
+        if ($response->success) {
+            $item = $response->data;
+        }
+
+        return $item;
+    }
+
+    public static function getAnnouncements($page = null)
+    {
+        $client = new ApiService();
+        $response = $client->get("admin/announcements", $page ? ['page' => $page] : null);
         $item = null;
         if ($response->success) {
             $item = $response->data;

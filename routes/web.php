@@ -31,6 +31,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('buses', \App\Http\Controllers\BusController::class);
     Route::resource('food-menu', \App\Http\Controllers\FoodMenuController::class);
     Route::resource('files', \App\Http\Controllers\FilesController::class);
+    Route::resource('announcements', \App\Http\Controllers\AnnouncementController::class);
 
 });
 

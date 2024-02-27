@@ -30,8 +30,16 @@
                 <tr>
                     <td>{{ $item['school']['name'] }}</td>
                     <td>{{ $item['name'] }}</td>
-                    <td>{{ $item['class'] ? $item['class']['name'] : null }}</td>
-                    <td>{{ $item['class'] ? $item['class']['student_count'] : null }}</td>
+                    <td class="text-center">{{ $item['class'] ? $item['class']['name'] : null }}</td>
+                    <td class="text-center">
+                        @if(!empty($item['class']))
+                            <a href="{{ route('students.index', ['class_id' => $item['class']['id']]) }}" class="edit" title=""
+                               data-toggle="tooltip" data-original-title="{{trans('Students')}}">
+                                {{ $item['class']['student_count'] }} <i class="fas fa-fw fa-users"></i>
+                            </a>
+
+                        @endif
+                    </td>
                     <td>{{ __(\App\Models\User::STATUSES[$item['status']]) }}</td>
                     <td>
                         <div class="float-right">

@@ -92,7 +92,7 @@
         school_id = $('#school_id').val();
 
         if (classes) {
-            updateClasses(getClasses(group_id));
+            updateClasses(getClasses(school_id, group_id));
         }
         if (teachers) {
             updateTeachers(getTeachers(school_id));
@@ -115,9 +115,9 @@
         });
     }
 
-    function getClasses(group_id) {
+    function getClasses(school_id, group_id) {
         return classes.filter(function (i) {
-            return i.group.id == group_id;
+            return i.group.id == group_id && i.school.id == school_id;
         }).map(function (i) {
             return i;
         });
