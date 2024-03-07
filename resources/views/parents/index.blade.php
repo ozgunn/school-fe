@@ -30,10 +30,14 @@
             @foreach ($data as $item)
                 <tr>
                     <td>{{ $item['school']['name'] }}</td>
-                    <td>{{ $item['name'] }}</td>
+                    <td>
+                        {{ $item['name'] }}
+                        {!! \App\Helpers\StringHelper::fixNameForDatatable($item['name']) !!}
+                    </td>
                     <td>
                         @foreach($item['student'] as $student)
                             <div><a href="{{ route('students.edit', ['student' => $student['id']]) }}">{{ $student['name'] }}</a></div>
+                            {!! \App\Helpers\StringHelper::fixNameForDatatable($student['name']) !!}
                         @endforeach
                     </td>
                     <td>{{ $item['phone_number'] }}</td>

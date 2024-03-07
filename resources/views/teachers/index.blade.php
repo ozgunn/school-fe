@@ -29,7 +29,10 @@
             @foreach ($data as $item)
                 <tr>
                     <td>{{ $item['school']['name'] }}</td>
-                    <td>{{ $item['name'] }}</td>
+                    <td>
+                        {{ $item['name'] }}
+                        {!! \App\Helpers\StringHelper::fixNameForDatatable($item['name']) !!}
+                    </td>
                     <td class="text-center">{{ $item['class'] ? $item['class']['name'] : null }}</td>
                     <td class="text-center">
                         @if(!empty($item['class']))
