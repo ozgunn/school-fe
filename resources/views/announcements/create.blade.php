@@ -1,16 +1,16 @@
 @extends('layouts.auth')
 
-@section('title', trans('Students'))
+@section('title', trans('Announcement'))
 
 @section('content')
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">{{ trans('Create Student') }}</h1>
+        <h1 class="h3 mb-0 text-gray-800">{{ trans('Create Announcement') }}</h1>
     </div>
 
     <!-- Content Row -->
     <div class="">
         <!-- View -->
-        @include('students/_form')
+        @include('announcements/_form')
 
 @endsection

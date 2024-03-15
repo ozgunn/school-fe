@@ -78,7 +78,7 @@ if(old()) {
             <button type="submit" class="btn btn-primary">{{__('Save')}}</button>
         </div>
         <div>
-            <a href="{{ route('teachers.index') }}" class="btn btn-light">{{__('Cancel')}}</a>
+            <a href="{{ route('students.index') }}" class="btn btn-light">{{__('Cancel')}}</a>
         </div>
     </div>
 </form>

@@ -25,10 +25,9 @@ class AnnouncementController extends BaseController
         $schools = User::getSchools();
         $groups = User::getGroups();
         $classes = User::getClasses();
-        $buses = User::getBuses(1);
-        $parents = User::getParents();
+        //$teachers = User::getTeachers();
 
-        return view('students/create', compact('schools', 'groups', 'classes', 'buses', 'parents'));
+        return view('announcements/create', compact('schools', 'groups', 'classes'));
     }
 
     public function store()
@@ -36,7 +35,7 @@ class AnnouncementController extends BaseController
         $request = \request()->all();
 
         $client = new ApiService();
-        $response = $client->post("admin/students", $request);
+        $response = $client->post("admin/announcements", $request);
         if (!$response->success) {
             session()->flash('error', $response->errorMsg);
 
@@ -44,11 +43,13 @@ class AnnouncementController extends BaseController
         }
 
         session()->flash('success', __('Created successfully'));
-        return redirect()->route('students.index');
+        return redirect()->route('announcements.index');
     }
 
     public function edit(int $id)
     {
+        abort(403);
+
         $client = new ApiService();
         $response = $client->get("admin/students/{$id}");
 
@@ -69,6 +70,7 @@ class AnnouncementController extends BaseController
 
     public function update(int $id)
     {
+        abort(403);
         $request = \request()->all();
 
         $client = new ApiService();
@@ -87,6 +89,7 @@ class AnnouncementController extends BaseController
 
     public function destroy(int $id)
     {
+        abort(403);
         $client = new ApiService();
         $response = $client->delete("admin/students/{$id}");
 

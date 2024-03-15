@@ -84,6 +84,9 @@
     "Parent Newspaper": "Veli Gazetesi",
     "Group Newspaper": "Grup Gazetesi",
     "Content": "İçerik",
+    "Announcement Target": "Duyuru Tipi",
+    "announcements.target_1": "Öğrenci",
+    "announcements.target_2": "Öğretmen",
 
     "Delete Confirmation": "Silme Onayı",
     "Are you sure you want to delete this item?": "Silmek istediğinizden emin misiniz?",
