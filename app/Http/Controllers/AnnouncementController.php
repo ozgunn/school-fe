@@ -12,6 +12,12 @@ class AnnouncementController extends BaseController
     public function index(Request $request)
     {
         $items = User::getAnnouncements();
+        $classes = User::getClasses();
+        $classesArr = array_column($classes, 'name', 'id');
+
+        foreach ($items as $index => $item) {
+            $items[$index]['class_name'] = $classesArr[$item['class_id']] ?? null;
+        }
 
         $data = [
             'data' => $items,
