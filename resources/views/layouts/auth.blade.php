@@ -31,7 +31,6 @@
     <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
-    <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js"></script>
@@ -113,6 +112,7 @@
 {{--<script src="js/demo/chart-pie-demo.js"></script>--}}
 {{--<script src="{{asset('vendor/chart.js/Chart.min.js')}}"></script>--}}
 
+<script src="{{asset('js/sb-admin-2.min.js?v=1')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.js"></script>
 {{--<script src="{{ asset('js/jquery.toast.min.js') }}"></script>--}}
 <script src="{{ asset('js/main.js') }}"></script>
