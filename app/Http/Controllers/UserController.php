@@ -48,7 +48,8 @@ class UserController extends BaseController
         if (!$response->success) {
             session()->flash('error', $response->errorMsg);
 
-            return redirect()->back()->withInput()->withErrors(new MessageBag([$response->errorMsg]));
+            $response->errorMsg = !is_array($response->errorMsg) ? [$response->errorMsg] : $response->errorMsg;
+            return back()->withInput()->withErrors(new MessageBag($response->errorMsg));
         }
 
         session()->flash('success', __('Created successfully'));
@@ -76,19 +77,23 @@ class UserController extends BaseController
     public function update(int $id)
     {
         $request = \request()->all();
+        if (empty($request['password'])) {
+            unset($request['password']);
+        }
 
         $client = new ApiService();
-        $response = $client->post("admin/classes/{$id}", $request, "put");
+        $response = $client->post("admin/users/{$id}", $request, "put");
 
         if ($response->success) {
             session()->flash('success', __('Updated successfully'));
         } else {
             session()->flash('error', $response->errorMsg);
 
-            return redirect()->back()->withInput()->withErrors(new MessageBag([$response->errorMsg]));
+            $response->errorMsg = !is_array($response->errorMsg) ? [$response->errorMsg] : $response->errorMsg;
+            return back()->withInput()->withErrors(new MessageBag($response->errorMsg));
         }
 
-        return redirect()->route('classes.index');
+        return redirect()->route('users.index');
     }
 
     public function destroy(int $id)

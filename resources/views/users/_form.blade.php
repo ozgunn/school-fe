@@ -2,6 +2,7 @@
 if (old()) {
     $data = old();
 }
+if (isset($data) && empty($data['role_id'])) $data['role_id'] = $data['role'];
 ?>
 <form action="{{ isset($data['id']) ? route('users.update', ['user' => $data['id']]) : route('users.store') }}"
       method="post">
@@ -13,10 +14,10 @@ if (old()) {
     <div class="form-row">
         <div class="form-group col-md-6">
             <label for="role">{{__('Role')}}</label>
-            <select class="form-control" id="role" name="role" {{ isset($data['id']) ? 'readonly': null }}>
+            <select class="form-control" id="role" name="role">
                 @foreach($roles as $roleKey => $roleVal)
                     @if($user['role_id'] >= $roleKey)
-                        <option value="{{ $roleKey }}">{{ __($roleVal) }}
+                        <option value="{{ $roleKey }}" {{isset($data['role_id']) && $data['role_id'] == $roleKey ? 'selected' : null}}>{{ __($roleVal) }}
                     @endif
                 @endforeach
             </select>
@@ -27,20 +28,15 @@ if (old()) {
     </div>
     <div class="form-row">
         <div class="form-group col-md-6">
-            <label for="school_ids">{{__('School')}}</label>
-            <select class="form-control" id="school_ids" name="school_ids[]"
-                    multiple="multiple" {{ isset($data['id']) ? 'readonly': null }}>
-                @if(isset($data['id']))
-                    <option value="{{ $data['school']['id'] }}">{{ $data['school']['name'] }}
-                @else
-                    <option value="">Seçiniz..</option>
-                    @foreach($schools as $school)
-                        <option
-                            value="{{$school['id']}}" {{ isset($data['school_ids']) && in_array($school['id'], $data['school_ids']) ? 'selected' : null  }}>{{ $school['name'] }}</option>
-                    @endforeach
-                @endif
+            <label for="school_id">{{__('School')}}</label>
+            <select class="form-control" id="school_id" name="school_id">
+                <option value="">Seçiniz..</option>
+                @foreach($schools as $school)
+                    <option
+                        value="{{$school['id']}}" {{ isset($data['school_id']) && ($school['id'] == $data['school_id']) ? 'selected' : null  }}>{{ $school['name'] }}</option>
+                @endforeach
             </select>
-            @error('school_ids')
+            @error('school_id')
             <div class="text-danger">{{ $message }}</div>
             @enderror
         </div>
@@ -59,7 +55,7 @@ if (old()) {
     <div class="form-row">
         <div class="form-group col-md-6">
             <label for="email">{{__('Email')}}</label>
-            <input type="text" class="form-control" id="email" name="email" value="{{ $data['email'] ?? null }}">
+            <input type="email" class="form-control" id="email" name="email" value="{{ $data['email'] ?? null }}" autocomplete="off">
             @error('email')
             <div class="text-danger">{{ $message }}</div>
             @enderror
@@ -80,17 +76,15 @@ if (old()) {
     <div class="form-row">
         <div class="form-group col-md-3">
             <label for="password">{{__('Password')}}</label>
-            <input type="password" class="form-control" id="password" name="password"
-                   value="{{ $data['password'] ?? null }}">
+            <input type="password" class="form-control" id="password" name="password" autocomplete="off">
             @error('password')
             <div class="text-danger">{{ $message }}</div>
             @enderror
         </div>
         <div class="form-group col-md-3">
-            <label for="password2">{{__('Password (again)')}}</label>
-            <input type="password" class="form-control" id="password2" name="password2"
-                   value="{{ $data['password2'] ?? null }}">
-            @error('password2')
+            <label for="password_confirmation">{{__('Password (again)')}}</label>
+            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
+            @error('password_confirmation')
             <div class="text-danger">{{ $message }}</div>
             @enderror
         </div>
@@ -99,7 +93,7 @@ if (old()) {
     <div class="form-row">
         <div class="form-group col-md-3">
             <label for="language">{{__('Language')}}</label>
-            <select class="form-control" id="language" name="language" {{ isset($data['id']) ? 'readonly': null }}>
+            <select class="form-control" id="language" name="language">
                 @foreach(config('app.languages') as $lang)
                     <option value="{{$lang}}" {{ isset($data['language']) && $data['language'] == $lang ? "selected" : null }}>{{ __($lang) }}
                 @endforeach

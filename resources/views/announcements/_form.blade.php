@@ -1,7 +1,5 @@
 <?php
-if (old()) {
-    $data = old();
-}
+$data = isset($data) ? $data : (old() ?? null);
 ?>
 
 <form action="{{ isset($data['id']) ? route('announcements.update', ['announcement' => $data['id']]) : route('announcements.store') }}"
@@ -11,35 +9,35 @@ if (old()) {
     @endif
     @csrf
     <input type="hidden" name="id" value="{{ $data['id'] ?? null }}">
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="target">{{__('Announcement Target')}}</label>
+                <select class="form-control" name="target" id="target">
+                    <option value="">{{__('Select')}}</option>
+                    <option
+                        value="1" {{ (isset($data['target']) && 1 == $data['target']) ? "selected" : null  }}>{{ __('announcements.target_1') }}
+                    <option
+                        value="2" {{ (isset($data['target']) && 2 == $data['target']) ? "selected" : null  }}>{{ __('announcements.target_2') }}
+                </select>
+                @error('target')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="form-group col-md-3">
+                <label for="lang">{{__('Language')}}</label>
+                <select class="form-control" id="lang" name="lang">
+                    @foreach(config('app.languages') as $lang)
+                        <option
+                            value="{{$lang}}" {{ (isset($data['lang']) && $data['lang']==$lang) ? 'selected' : null }}>{{ __($lang) }}</option>
+                    @endforeach
+                </select>
+                @error('lang')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+        </div>
     @include('../includes/school-class-selector')
 
-    <div class="form-row">
-        <div class="form-group col-md-3">
-            <label for="target">{{__('Announcement Target')}}</label>
-            <select class="form-control" name="target" id="target">
-                <option value="">{{__('Select')}}</option>
-                <option
-                    value="1" {{ (isset($data['target']) && 1 == $data['target']) ? "selected" : null  }}>{{ __('announcements.target_1') }}
-                <option
-                    value="2" {{ (isset($data['target']) && 2 == $data['target']) ? "selected" : null  }}>{{ __('announcements.target_2') }}
-            </select>
-            @error('target')
-            <div class="text-danger">{{ $message }}</div>
-            @enderror
-        </div>
-        <div class="form-group col-md-3">
-            <label for="lang">{{__('Language')}}</label>
-            <select class="form-control" id="lang" name="lang">
-                @foreach(config('app.languages') as $lang)
-                    <option
-                        value="{{$lang}}" {{ (isset($data['lang']) && $data['lang']==$lang) ? 'selected' : null }}>{{ __($lang) }}</option>
-                @endforeach
-            </select>
-            @error('lang')
-            <div class="text-danger">{{ $message }}</div>
-            @enderror
-        </div>
-    </div>
     <div class="form-row">
         <div class="form-group col-md-6">
             <label for="content">{{__('Content')}}</label>

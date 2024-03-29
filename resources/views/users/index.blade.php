@@ -20,6 +20,7 @@
                 <th>{{__('School')}}</th>
                 <th>{{__('Name')}}</th>
                 <th>{{__('Role')}}</th>
+                <th>{{__('Status')}}</th>
                 <th class="nowrap"></th>
             </tr>
             </thead>
@@ -29,6 +30,7 @@
                     <td>{{ $item['school']['name'] }}</td>
                     <td>{{ $item['name'] }}</td>
                     <td>{{ __($item['role']) }}</td>
+                    <td>{{ __(\App\Models\User::STATUSES[$item['status']]) }}</td>
                     <td>
                         <div class="float-right">
                             <a href="{{ route('users.edit', ['user' => $item['id']]) }}" class="edit" title=""

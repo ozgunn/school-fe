@@ -48,23 +48,18 @@ class FilesController extends BaseController
 
     public function edit(int $id)
     {
-        $schools = User::getSchools();
+        $groups = User::getGroups();
 
         $client = new ApiService();
-        $response = $client->get("admin/food-menu/{$id}");
+        $response = $client->get("admin/files/{$id}");
 
         if ($response->success) {
             $data = $response->data;
-            if (!empty($data['items'])) {
-                $data['first_meal'] = $data['items'][0]['value'];
-                $data['second_meal'] = $data['items'][1]['value'];
-                $data['third_meal'] = $data['items'][2]['value'];
-            }
         } else {
             abort(404);
         }
 
-        return view('food-menu/edit', compact('schools', 'data'));
+        return view('files/edit', compact('groups', 'data'));
     }
 
     public function update(int $id)
@@ -72,7 +67,7 @@ class FilesController extends BaseController
         $request = \request()->all();
 
         $client = new ApiService();
-        $response = $client->post("admin/food-menu/{$id}", $request, "put");
+        $response = $client->post("admin/files/{$id}", $request, "put");
 
         if ($response->success) {
             $data = $response->data;
@@ -80,10 +75,10 @@ class FilesController extends BaseController
         } else {
             session()->flash('error', $response->errorMsg);
 
-            return view('food-menu/edit')->with('data', $request)->withErrors(new MessageBag([$response->errorMsg]));
+            return redirect()->back()->withInput()->withErrors(new MessageBag([$response->errorMsg]));
         }
 
-        return redirect()->route('food-menu.index');
+        return redirect()->route('files.index');
     }
 
     public function destroy(int $id)

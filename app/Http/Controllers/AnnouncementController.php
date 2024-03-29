@@ -44,8 +44,8 @@ class AnnouncementController extends BaseController
         $response = $client->post("admin/announcements", $request);
         if (!$response->success) {
             session()->flash('error', $response->errorMsg);
-
-            return back()->withInput()->withErrors(new MessageBag([$response->errorMsg]));
+            $response->errorMsg = !is_array($response->errorMsg) ? [$response->errorMsg] : $response->errorMsg;
+            return back()->withInput()->withErrors(new MessageBag($response->errorMsg));
         }
 
         session()->flash('success', __('Created successfully'));

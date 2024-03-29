@@ -56,6 +56,7 @@
     "Phone": "Telefon",
     "Address": "Adres",
     "Active": "Aktif",
+    "Pending": "Pasif",
     "Status": "Durumu",
     "Passive": "Pasif",
     "School": "Okul",
@@ -78,6 +79,8 @@
     "Lunch": "Öğle",
     "Snack Time": "Akşam",
     "Day": "Gün",
+    "Year": "Yıl",
+    "Month": "Ay",
     "Language": "Dil",
     "Newspaper Type": "Gazete Tipi",
     "Publish Date": "Yayın Tarihi",
@@ -96,5 +99,6 @@
     "Create failed": "Oluşturma işlemi başarısız!",
     "Updated successfully": "Başarıyla güncellendi",
     "Update failed": "Güncelleme işlemi başarısız!",
-    "An error occurred": "Bir hata oluştu"
+    "An error occurred": "Bir hata oluştu",
+    "If you want to change the file, you can delete and recreate it": "Dosyayı değiştirmek istiyorsanız kaydı silip yeniden oluşturabilirsiniz"
 }

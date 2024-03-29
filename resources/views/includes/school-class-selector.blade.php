@@ -5,7 +5,7 @@
                 <option value="">{{__('Select')}}</option>
                 @foreach($schools as $school)
                     <option
-                        value="{{$school['id']}}" {{ isset($data['school']['id']) && $data['school']['id'] == $school['id'] ? 'selected' : null  }}>{{ $school['name'] }}</option>
+                        value="{{$school['id']}}" {{ (isset($data['school']['id']) && $data['school']['id'] == $school['id']) || (isset($data['school_id']) && $data['school_id'] == $school['id']) ? 'selected' : null  }}>{{ $school['name'] }}</option>
                 @endforeach
         </select>
         @error('school_id')
@@ -138,7 +138,7 @@
             $('#group_id').append($('<option>', {
                 value: group.id,
                 text: group.name,
-                selected: data && (group.id === data.group.id)
+                selected: data && data.group && (group.id === data.group.id)
             }));
         });
     }
@@ -149,7 +149,7 @@
             $('#class_id').append($('<option>', {
                 value: cls.id,
                 text: cls.name,
-                selected: data && (cls.id === data.class.id)
+                selected: data && data.class && (cls.id === data.class.id)
             }));
         });
     }

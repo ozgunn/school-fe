@@ -2,6 +2,9 @@
 if (old()) {
     $data = old();
 }
+if (isset($data['group'])) {
+    $data['group_id'] = $data['group']['id'];
+}
 ?>
 
 <form
@@ -32,7 +35,7 @@ if (old()) {
             <select class="form-control" id="publish_month" name="publish_month">
                 <option value="">{{ __('Select') }}</option>
                 @for($i=1; $i<=12; $i++)
-                    <option {{ isset($data['publish_month']) && $data['publish_month'] == $i ? "selected" : ($i == date('n') ? "selected" : null)  }}>{{ $i }}</option>
+                    <option {{ (isset($data['publish_month']) && $data['publish_month'] == $i) || (!isset($data['publish_month']) && $i == date('n')) ? "selected" : null }}>{{ $i }}</option>
                 @endfor
             </select>
             @error('publish_month')
@@ -56,7 +59,7 @@ if (old()) {
             @enderror
         </div>
     </div>
-    <div class="form-row div-group d-none">
+    <div class="form-row div-group {{ isset($data['type']) && $data['type'] == 1 ? 'd-none' : '' }}">
         <div class="form-group col-md-6">
             <label for="group_id">{{__('Group')}}</label>
             <select class="form-control" id="group_id" name="group_id">
@@ -74,11 +77,15 @@ if (old()) {
 
     <div class="form-row">
         <div class="form-group col-md-6">
-            <label for="pdf" class="form-label">{{__('File')}}</label>
-            <input type="file" name="pdf" id="pdf" class="" accept="application/pdf">
-            @error('pdf')
-            <div class="text-danger">{{ $message }}</div>
-            @enderror
+            @if(isset($data['id']))
+                <div class="text-danger small">* {{ __('If you want to change the file, you can delete and recreate it') }}</div>
+            @else
+                <label for="pdf" class="form-label">{{__('File')}}</label>
+                <input type="file" name="pdf" id="pdf" class="" accept="application/pdf">
+                @error('pdf')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
+            @endif
         </div>
     </div>
     <div class="d-flex justify-content-between">

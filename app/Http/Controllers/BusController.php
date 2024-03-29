@@ -75,7 +75,7 @@ class BusController extends BaseController
         } else {
             session()->flash('error', $response->errorMsg);
 
-            return view('buses/edit')->with('data', $request)->withErrors(new MessageBag([$response->errorMsg]));
+            return redirect()->back()->withInput()->withErrors(new MessageBag([$response->errorMsg]));
         }
 
         return redirect()->route('buses.index');
