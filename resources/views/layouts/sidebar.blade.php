@@ -52,7 +52,7 @@
         </li>
     @endif
 
-    @if(session('user')['role_id'] >= \App\Models\User::ROLE_ADMIN)
+    @if(session('user')['role_id'] >= \App\Models\User::ROLE_MANAGER)
         <li class="nav-item {{ str_contains(request()->path(), 'classes')? 'active' : '' }}">
             <a class="nav-link" href="{{ route('classes.index') }}">
                 <i class="fas fa-fw fa-bookmark"></i>
@@ -68,7 +68,7 @@
         </li>
     @endif
 
-    @if(session('user')['role_id'] >= \App\Models\User::ROLE_ADMIN)
+    @if(session('user')['role_id'] >= \App\Models\User::ROLE_MANAGER)
         <li class="nav-item {{ str_contains(request()->path(), 'teachers')? 'active' : '' }}">
             <a class="nav-link" href="{{ route('teachers.index') }}">
                 <i class="fas fa-fw fa-female"></i>
@@ -76,7 +76,7 @@
         </li>
     @endif
 
-    @if(session('user')['role_id'] >= \App\Models\User::ROLE_ADMIN)
+    @if(session('user')['role_id'] >= \App\Models\User::ROLE_MANAGER)
         <li class="nav-item {{ str_contains(request()->path(), 'parents')? 'active' : '' }}">
             <a class="nav-link" href="{{ route('parents.index') }}">
                 <i class="fas fa-fw fa-users"></i>
@@ -84,7 +84,7 @@
         </li>
     @endif
 
-    @if(session('user')['role_id'] >= \App\Models\User::ROLE_ADMIN)
+    @if(session('user')['role_id'] >= \App\Models\User::ROLE_MANAGER)
         <li class="nav-item {{ str_contains(request()->path(), 'students')? 'active' : '' }}">
             <a class="nav-link" href="{{ route('students.index') }}">
                 <i class="fas fa-fw fa-child"></i>
@@ -92,7 +92,7 @@
         </li>
     @endif
 
-    @if(session('user')['role_id'] >= \App\Models\User::ROLE_ADMIN)
+    @if(session('user')['role_id'] >= \App\Models\User::ROLE_MANAGER)
         <li class="nav-item {{ str_contains(request()->path(), 'announcements')? 'active' : '' }}">
             <a class="nav-link" href="{{ route('announcements.index') }}">
                 <i class="fas fa-fw fa-bullhorn"></i>
@@ -100,7 +100,7 @@
         </li>
     @endif
 
-    @if(session('user')['role_id'] >= \App\Models\User::ROLE_ADMIN)
+    @if(session('user')['role_id'] >= \App\Models\User::ROLE_MANAGER)
         <li class="nav-item {{ str_contains(request()->path(), 'buses')? 'active' : '' }}">
             <a class="nav-link" href="{{ route('buses.index') }}">
                 <i class="fas fa-fw fa-bus"></i>
@@ -108,11 +108,19 @@
         </li>
     @endif
 
-    @if(session('user')['role_id'] >= \App\Models\User::ROLE_ADMIN)
+    @if(session('user')['role_id'] >= \App\Models\User::ROLE_MANAGER)
         <li class="nav-item {{ str_contains(request()->path(), 'files')? 'active' : '' }}">
             <a class="nav-link" href="{{ route('files.index') }}">
                 <i class="fas fa-fw fa-newspaper"></i>
                 <span>{{ trans('Files') }}</span></a>
+        </li>
+    @endif
+
+    @if(session('user')['role_id'] >= \App\Models\User::ROLE_MANAGER)
+        <li class="nav-item {{ str_contains(request()->path(), 'food-menu')? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('food-menu.index') }}">
+                <i class="fas fa-fw fa-utensils"></i>
+                <span>{{ trans('Food Menu') }}</span></a>
         </li>
     @endif
 
@@ -133,14 +141,6 @@
             <i class="fas fa-fw fa-images"></i>
             <span>Resimler</span></a>
     </li>
-
-    @if(session('user')['role_id'] >= \App\Models\User::ROLE_ADMIN)
-        <li class="nav-item {{ str_contains(request()->path(), 'food-menu')? 'active' : '' }}">
-            <a class="nav-link" href="{{ route('food-menu.index') }}">
-                <i class="fas fa-fw fa-utensils"></i>
-                <span>{{ trans('Food Menu') }}</span></a>
-        </li>
-    @endif
 
     <li class="nav-item">
         <a class="nav-link" href="index.html">
