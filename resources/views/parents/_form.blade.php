@@ -72,17 +72,15 @@
     <div class="form-row">
         <div class="form-group col-md-3">
             <label for="password">{{__('Password')}}</label>
-            <input type="password" class="form-control" id="password" name="password"
-                   value="{{ $data['password'] ?? null }}">
+            <input type="password" class="form-control" id="password" name="password">
             @error('password')
             <div class="text-danger">{{ $message }}</div>
             @enderror
         </div>
         <div class="form-group col-md-3">
-            <label for="password2">{{__('Password (again)')}}</label>
-            <input type="password" class="form-control" id="password2" name="password2"
-                   value="{{ $data['password2'] ?? null }}">
-            @error('password2')
+            <label for="password_confirmation">{{__('Password (again)')}}</label>
+            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
+            @error('password_confirmation')
             <div class="text-danger">{{ $message }}</div>
             @enderror
         </div>
