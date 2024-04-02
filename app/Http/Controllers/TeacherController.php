@@ -41,7 +41,8 @@ class TeacherController extends BaseController
         if (!$response->success) {
             session()->flash('error', $response->errorMsg);
 
-            return back()->withInput()->withErrors(new MessageBag([$response->errorMsg]));
+            $response->errorMsg = !is_array($response->errorMsg) ? [$response->errorMsg] : $response->errorMsg;
+            return back()->withInput()->withErrors(new MessageBag($response->errorMsg));
         }
 
         session()->flash('success', __('Created successfully'));
@@ -68,7 +69,8 @@ class TeacherController extends BaseController
         } else {
             session()->flash('error', $response->errorMsg);
 
-            return redirect()->back()->withInput()->withErrors(new MessageBag([$response->errorMsg]));
+            $response->errorMsg = !is_array($response->errorMsg) ? [$response->errorMsg] : $response->errorMsg;
+            return back()->withInput()->withErrors(new MessageBag($response->errorMsg));
         }
 
         return redirect()->route('teachers.index');
