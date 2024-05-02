@@ -79,7 +79,7 @@ class TeacherController extends BaseController
     public function destroy(int $id)
     {
         $client = new ApiService();
-        $response = $client->delete("admin/classes/{$id}");
+        $response = $client->delete("admin/users/{$id}");
 
         if ($response->success) {
             return response()->json(['success' => true, 'id' => $id ], 200);
