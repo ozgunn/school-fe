@@ -35,7 +35,7 @@ $groups = session('groups');
             @foreach ($data as $item)
                 <tr>
                     <td>{{ $schools[$item['school_id']] }}</td>
-                    <td>{{ $item['group_id'] ? $groups[$item['group_id']] : null }}</td>
+                    <td>{{ $item['group_id'] && isset($groups[$item['group_id']]) ? $groups[$item['group_id']] : null }}</td>
                     <td>{{ $item['class_name'] ?? null }}</td>
                     <td>{{ __('announcements.target_'.$item['target']) }}</td>
                     <td>{{ !empty($item['content']) ? $item['content'][0]['content'] : null }}</td>
