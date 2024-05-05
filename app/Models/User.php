@@ -198,4 +198,28 @@ class User extends Authenticatable
 
         return $item;
     }
+
+    public static function getDailyReports($page = null)
+    {
+        $client = new ApiService();
+        $response = $client->get("admin/daily", $page ? ['page' => $page] : null);
+        $items = null;
+        if ($response->success) {
+            $items = $response->data;
+        }
+
+        return $items;
+    }
+
+    public static function getMessages($page = null)
+    {
+        $client = new ApiService();
+        $response = $client->get("admin/messages", $page ? ['page' => $page] : null);
+        $items = null;
+        if ($response->success) {
+            $items = $response->data;
+        }
+
+        return $items;
+    }
 }

@@ -124,17 +124,21 @@
         </li>
     @endif
 
-    <li class="nav-item">
-        <a class="nav-link" href="index.html">
-            <i class="fas fa-fw fa-pen-square"></i>
-            <span>Notlar</span></a>
-    </li>
+    @if(session('user')['role_id'] >= \App\Models\User::ROLE_MANAGER)
+        <li class="nav-item {{ str_contains(request()->path(), 'daily-report')? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('daily-reports.index') }}">
+                <i class="fas fa-fw fa-pen-square"></i>
+                <span>{{ trans('Daily Reports') }}</span></a>
+        </li>
+    @endif
 
-    <li class="nav-item">
-        <a class="nav-link" href="index.html">
-            <i class="fas fa-fw fa-envelope"></i>
-            <span>Mesajlar</span></a>
-    </li>
+    @if(session('user')['role_id'] >= \App\Models\User::ROLE_MANAGER)
+        <li class="nav-item {{ str_contains(request()->path(), 'messages')? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('messages.index') }}">
+                <i class="fas fa-fw fa-envelope"></i>
+                <span>{{ trans('Messages') }}</span></a>
+        </li>
+    @endif
 
     <li class="nav-item">
         <a class="nav-link" href="index.html">

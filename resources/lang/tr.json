@@ -11,6 +11,8 @@
     "Food Menu": "Yemek Listesi",
     "Files": "Gazeteler",
     "Announcements": "Duyurular",
+    "Daily Reports": "Günlük Notlar",
+    "Messages": "Mesajlar",
 
     "Create": "Yeni",
     "Delete": "Sil",
@@ -50,6 +52,7 @@
     "en": "English",
     "created_at": "Oluşturma Zamanı",
 
+    "Date": "Tarih",
     "User": "Kullanıcı",
     "Name": "Adı",
     "E-mail": "E-mail",
@@ -90,6 +93,11 @@
     "Announcement Target": "Duyuru Tipi",
     "announcements.target_1": "Öğrenci",
     "announcements.target_2": "Öğretmen",
+    "Note": "Not",
+    "Details": "Detaylar",
+    "Daily Report Detail": "Günlük Not Detayı",
+    "Read At": "Okunma Zamanı",
+    "Confirmed At": "Onay Zamanı",
 
     "Delete Confirmation": "Silme Onayı",
     "Are you sure you want to delete this item?": "Silmek istediğinizden emin misiniz?",
