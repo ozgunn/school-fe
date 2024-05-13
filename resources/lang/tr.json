@@ -53,6 +53,11 @@
     "tr": "Türkçe",
     "en": "English",
     "created_at": "Oluşturma Zamanı",
+    "role.101": "Süperadmin",
+    "role.100": "Admin",
+    "role.50": "Sorumlu",
+    "role.20": "Öğretmen",
+    "role.10": "Veli",
 
     "Date": "Tarih",
     "User": "Kullanıcı",

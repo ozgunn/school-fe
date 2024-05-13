@@ -20,6 +20,7 @@
             <tr>
                 <th>{{__('created_at')}}</th>
                 <th>{{__('User')}}</th>
+                <th>{{__('Role')}}</th>
                 <th>{{__('Log Level')}}</th>
                 <th>{{__('Log')}}</th>
                 <th>{{__('Details')}}</th>
@@ -33,6 +34,7 @@
                 <tr>
                     <td>{{ \Illuminate\Support\Carbon::parse($item['created_at'])->format('Y-m-d H:i') }}</td>
                     <td>{{ $item['user'] ? $item['user']['name'] : null }}</td>
+                    <td>{{ $item['user'] ? __("role.".$item['user']['role']) : null }}</td>
                     <td>{{ $item['level'] }}</td>
                     <td>{{ __($item['message']) }}</td>
                     <td>{{ json_encode($item['context']) }}</td>
