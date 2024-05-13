@@ -8,3 +8,7 @@
     height: auto !important;
     color: #6e707e !important;
 }
+
+.img-thumbnail {
+    max-width: 120px !important;
+}

@@ -140,17 +140,21 @@
         </li>
     @endif
 
-    <li class="nav-item">
-        <a class="nav-link" href="index.html">
-            <i class="fas fa-fw fa-images"></i>
-            <span>Resimler</span></a>
-    </li>
+    @if(session('user')['role_id'] >= \App\Models\User::ROLE_MANAGER)
+        <li class="nav-item {{ str_contains(request()->path(), 'photos')? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('photos.index') }}">
+                <i class="fas fa-fw fa-images"></i>
+                <span>{{ trans('Photos') }}</span></a>
+        </li>
+    @endif
 
-    <li class="nav-item">
-        <a class="nav-link" href="index.html">
-            <i class="fas fa-fw fa-file"></i>
-            <span>Kayıtlar</span></a>
-    </li>
+    @if(session('user')['role_id'] >= \App\Models\User::ROLE_MANAGER)
+        <li class="nav-item {{ str_contains(request()->path(), 'logs')? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('logs.index') }}">
+                <i class="fas fa-fw fa-file"></i>
+                <span>{{ trans('Logs') }}</span></a>
+        </li>
+    @endif
 
     <!-- Heading -->
     <div class="sidebar-heading d-none">

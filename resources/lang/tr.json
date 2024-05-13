@@ -13,6 +13,8 @@
     "Announcements": "Duyurular",
     "Daily Reports": "Günlük Notlar",
     "Messages": "Mesajlar",
+    "Photos": "Fotoğraflar",
+    "Logs": "Kayıtlar",
 
     "Create": "Yeni",
     "Delete": "Sil",
@@ -98,6 +100,9 @@
     "Daily Report Detail": "Günlük Not Detayı",
     "Read At": "Okunma Zamanı",
     "Confirmed At": "Onay Zamanı",
+    "Photo": "Fotoğraf",
+    "Log": "Kayıt",
+    "Log Level": "Seviye",
 
     "Delete Confirmation": "Silme Onayı",
     "Are you sure you want to delete this item?": "Silmek istediğinizden emin misiniz?",
@@ -108,5 +113,22 @@
     "Updated successfully": "Başarıyla güncellendi",
     "Update failed": "Güncelleme işlemi başarısız!",
     "An error occurred": "Bir hata oluştu",
-    "If you want to change the file, you can delete and recreate it": "Dosyayı değiştirmek istiyorsanız kaydı silip yeniden oluşturabilirsiniz"
+    "If you want to change the file, you can delete and recreate it": "Dosyayı değiştirmek istiyorsanız kaydı silip yeniden oluşturabilirsiniz",
+
+    "login": "Giriş yaptı",
+    "login failed": "Giriş başarısız",
+    "User created": "Kullanıcı oluşturuldu",
+    "User updated": "Kullanıcı güncellendi",
+    "User deleted": "Kullanıcı silindi",
+    "Announcement created": "Duyuru oluşturuldu",
+    "Announcement updated": "Duyuru güncellendi",
+    "Announcement deleted": "Duyuru silindi",
+    "daily created": "Günlük rapor oluşturuldu",
+    "daily updated": "Günlük rapor güncellendi",
+    "daily deleted": "Günlük rapor silindi",
+    "daily viewed": "Günlük rapor görüntülendi",
+    "daily all viewed": "Günlük raporlar listelendi",
+    "profile update": "Profil güncellendi",
+    "UserDevice created": "Cihaz kaydedildi",
+    "UserDevice updated": "Cihaz güncellendi"
 }

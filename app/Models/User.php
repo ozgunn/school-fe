@@ -222,4 +222,28 @@ class User extends Authenticatable
 
         return $items;
     }
+
+    public static function getMedia($page = null)
+    {
+        $client = new ApiService();
+        $response = $client->get("admin/media", $page ? ['page' => $page] : null);
+        $item = null;
+        if ($response->success) {
+            $item = $response->data;
+        }
+
+        return $item;
+    }
+
+    public static function getLogs($page = null)
+    {
+        $client = new ApiService();
+        $response = $client->get("admin/logs", $page ? ['page' => $page] : null);
+        $item = null;
+        if ($response->success) {
+            $item = $response->data;
+        }
+
+        return $item;
+    }
 }

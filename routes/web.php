@@ -34,6 +34,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('announcements', \App\Http\Controllers\AnnouncementController::class);
     Route::resource('daily-reports', \App\Http\Controllers\DailyReportController::class);
     Route::resource('messages', \App\Http\Controllers\MessageController::class);
+    Route::resource('photos', \App\Http\Controllers\PhotoController::class);
+    Route::resource('logs', \App\Http\Controllers\LogController::class);
 
 });
 
