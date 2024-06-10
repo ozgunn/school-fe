@@ -1,108 +1,136 @@
 @extends('layouts.auth')
 
-@section('title', trans('Daily Report Detail'))
+@section('title', trans('Message Detail'))
 
 @section('content')
+
+    @php
+        $studentId = !empty($data) ? $data[0]['student']['id'] : null;
+    @endphp
+
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">{{ trans('Daily Report Detail') }} (#{{ $data['id'] }})</h1>
+        <h1 class="h3 mb-0 text-gray-800"><a href="{{ route('messages.index') }}">{{ trans('Messages') }}</a> > {{ trans('Message Detail') }}</h1>
     </div>
     <!-- Content Row -->
-    <div class="col-md-6">
-        <!-- View -->
-        <table class="table table-striped">
-            <tbody>
-            <tr>
-                <th scope="row">{{__('Date')}}</th>
-                <td>{{ \Illuminate\Support\Carbon::parse($data['date'])->format("Y-m-d") }}</td>
-            </tr>
-            <tr>
-                <th scope="row">{{__('created_at')}}</th>
-                <td>{{ \Illuminate\Support\Carbon::parse($data['created_at'])->format("Y-m-d H:i") }}</td>
-            </tr>
-            <tr>
-                <th scope="row">{{__('Read At')}}</th>
-                <td>{{ $data['read_at'] ? \Illuminate\Support\Carbon::parse($data['read_at'])->format("Y-m-d H:i") : "-" }}</td>
-            </tr>
-            <tr>
-                <th scope="row">{{__('Confirmed At')}}</th>
-                <td>{{ $data['confirmed_at'] ? \Illuminate\Support\Carbon::parse($data['confirmed_at'])->format("Y-m-d H:i") : "-" }}</td>
-            </tr>
-            <tr>
-                <th scope="row">{{__('Teacher')}}</th>
-                <td>{{ isset($data['teacher']) ? $data['teacher']['name'] : null }}</td>
-            </tr>
-            <tr>
-                <th scope="row">{{__('Student')}}</th>
-                <td>{{ isset($data['student']) ? $data['student']['name'] : null }}</td>
-            </tr>
-            <tr>
-                <th scope="row">{{__('Note')}}</th>
-                <td>{{ $data['note'] }}</td>
-            </tr>
-            <tr>
-                <th scope="row">{{__('Details')}}</th>
-                <td>
-                    @if ($data['mood'])
-                        <div class="mt-4">
-                            {{ $data['mood']['title'] }}:
-                        </div>
-                        <div class="row">
-                            @foreach($data['mood']['items'] as $item)
-                                <div class="col-md-6 pl-2">
-                                    <i class="fas fa-fw fa-check {{$item["selected"] ? 'text-success': 'text-gray-200'}}"></i> {{$item["title"]}}
-                                </div>
-                            @endforeach
-                        </div>
-                    @endif
-                    @if ($data['activity'])
-                        <div class="mt-4">
-                            {{ $data['activity']['title'] }}:
-                        </div>
-                        <div class="row">
-                            @foreach($data['activity']['items'] as $item)
-                                <div class="col-md-6 pl-2">
-                                    <i class="fas fa-fw fa-check {{$item["selected"] ? 'text-success': 'text-gray-200'}}"></i> {{$item["title"]}}
-                                </div>
-                            @endforeach
-                        </div>
-                    @endif
-                    @if ($data['food'])
-                        <div class="mt-4">
-                            {{ $data['food']['title'] }}:
-                        </div>
-                        <div>
-                            @foreach($data['food']['items'] as $item)
-                                <div>
-                                    {{ $item['title'] }}:
-                                </div>
-                                <div class="row">
-                                    @foreach($item['items'] as $item2)
-                                        <div class="col-md-4 pl-2">
-                                            <i class="fas fa-fw fa-check {{$item2["selected"] ? 'text-success': 'text-gray-200'}}"></i> {{$item2["title"]}}
-                                        </div>
-                                    @endforeach
-                                </div>
-                            @endforeach
-                        </div>
-                    @endif
-                    @if ($data['sleep'])
-                        <div class="mt-4">
-                            {{ $data['sleep']['title'] }}:
-                        </div>
-                        <div class="row">
-                            @foreach($data['sleep']['items'] as $item)
-                                <div class="col-md-4 pl-2">
-                                    <i class="fas fa-fw fa-check {{$item["selected"] ? 'text-success': 'text-gray-200'}}"></i> {{$item["title"]}}
-                                </div>
-                            @endforeach
-                        </div>
-                    @endif
-                </td>
-            </tr>
+    <div class="row">
 
-            </tbody>
-        </table>
+    <div class="col-md-8 order-2 order-md-1">
+        <div class="chat-container pt-3">
+                <div class="messages-container" id="messagesContainer">
+                    @foreach($data as $message)
+                        <div class="message {{ $message["sender"] == 'school' ? 'user' : 'other' }}">
+                            <div class="text">{{ $message["message"] }}</div>
+                            <div class="meta">
+                                {{ $message["created_at"] }}
+                                @if($message["read_at"])
+                                    <i class="fas fa-check-double"></i>
+                                @else
+                                    <i class="fas fa-check"></i>
+                                @endif
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+                <form action="{{ route('messages.store') }}" method="post">
+                    @csrf
+                    <input type="hidden" name="student_id" value="{{ $studentId }}">
+                <div class="input-container">
+                    <textarea id="messageInput" name="message" placeholder="{{ trans('Type a message') }}..." rows="2"></textarea>
+                    <button id="sendButton">{{ trans('Send') }}</button>
+                </div>
+                </form>
+            </div>
+
+    </div>
+    <div class="col-md-4 order-1 order-md-2 pb-3">
+        @if(isset($data[0]))
+            <div class="row">
+                <div class="col-4">{{ trans('Student') }}</div>
+                <div class="col-8 h5 font-weight-bold">{{ $data[0]['student']['name'] }}</div>
+            </div>
+            <div class="row">
+                <div class="col-4">{{ trans('Parent') }}</div>
+                <div class="col-8 h5 font-weight-bold">{{ $data[0]['parent']['name'] }}</div>
+            </div>
+        @endif
+    </div>
+
+
+    <style>
+        .chat-container {
+            /*max-width: 600px;*/
+            margin: auto;
+            background: #f8f9fa;
+            /*border-radius: 10px;*/
+            display: flex;
+            flex-direction: column;
+            height: 75vh;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        .messages-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        .message {
+            padding: 10px 10px 20px 10px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            width: fit-content;
+            min-width: 200px;
+            position: relative;
+        }
+        .message.user {
+            background: #dcf8c6;
+            text-align: right;
+            margin-left: auto;
+        }
+        .message.other {
+            background: #fff;
+            text-align: left;
+            margin-right: auto;
+        }
+        .message .text {
+            display: inline-block;
+            max-width: 80%;
+        }
+        .message .meta {
+            font-size: 0.7em;
+            color: #aaa;
+            position: absolute;
+            bottom: 5px;
+            right: 10px;
+            font-style: italic;
+        }
+        .input-container {
+            display: flex;
+            padding: 10px;
+            background: #fff;
+        }
+        .input-container textarea {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+        .input-container button {
+            margin: 20px 10px;
+            padding: 10px 20px;
+            background: #007bff;
+            border: none;
+            color: #fff;
+            border-radius: 10px;
+        }
+    </style>
+
+    <script>
+            $(document).ready(function() {
+                var messagesContainer = $('#messagesContainer');
+                messagesContainer.scrollTop(messagesContainer[0].scrollHeight);
+            });
+        </script>
 
 @endsection
 

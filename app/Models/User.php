@@ -142,7 +142,7 @@ class User extends Authenticatable
     {
         $client = new ApiService();
         $params = $class ? ['class_id' => $class] : [];
-        $response = $client->get("admin/students", array_merge($params, ['order' => 'id', 'sort' => 'desc']));
+        $response = $client->get("admin/students", array_merge($params, ['order' => 'name', 'sort' => 'asc']));
         $item = null;
         if ($response->success) {
             $item = $response->data['students'];
@@ -215,12 +215,11 @@ class User extends Authenticatable
     {
         $client = new ApiService();
         $response = $client->get("admin/messages", $page ? ['page' => $page] : null);
-        $items = null;
-        if ($response->success) {
-            $items = $response->data;
+        if ($response->success && $response->data) {
+            return $response->data;
         }
 
-        return $items;
+        return null;
     }
 
     public static function getMedia($page = null)
