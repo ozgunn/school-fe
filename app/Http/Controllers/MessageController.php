@@ -11,7 +11,8 @@ class MessageController extends BaseController
 {
     public function index(Request $request)
     {
-        $result = User::getMessages();
+        $sent = $request->get('sent');
+        $result = User::getMessages($sent);
 
         $data = [
             'data' => $result['messages'],

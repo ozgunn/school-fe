@@ -211,10 +211,10 @@ class User extends Authenticatable
         return $items;
     }
 
-    public static function getMessages($page = null)
+    public static function getMessages($sent=null, $page = null)
     {
         $client = new ApiService();
-        $response = $client->get("admin/messages", $page ? ['page' => $page] : null);
+        $response = $client->get("admin/messages", ['page' => $page, 'sent' => $sent]);
         if ($response->success && $response->data) {
             return $response->data;
         }
