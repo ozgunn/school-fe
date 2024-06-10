@@ -6,9 +6,15 @@
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">{{ trans('Messages') }}</h1>
-        <a href="{{ route('messages.create') }}" class="btn btn-primary shadow-sm"><i
+        <h1 class="h3 mb-0 text-gray-800">{{ request()->get('sent') ? trans('Sent') : trans('Inbox') }}</h1>
+        <div>
+            <a href="{{ route('messages.index') }}" class="btn btn-secondary shadow-sm"><i
+                class="fas fa-envelope fa-fw text-white"></i> {{trans('Inbox')}}</a>
+            <a href="{{ route('messages.index', ['sent' => 1]) }}" class="btn btn-secondary shadow-sm ml-1"><i
+                class="fas fa-paper-plane fa-fw text-white"></i> {{trans('Sent')}}</a>
+            <a href="{{ route('messages.create') }}" class="btn btn-primary shadow-sm ml-5"><i
                 class="fas fa-plus fa-fw text-white"></i> {{trans('Create')}}</a>
+        </div>
     </div>
 
     <!-- Content Row -->
@@ -18,8 +24,8 @@
             <thead class="table-light">
             <tr>
                 <th>{{__('Date')}}</th>
-                <th>{{__('Sender')}}</th>
-                <th>{{__('Receiver')}}</th>
+                <th>{{__('Parent')}}</th>
+                <th>{{__('Student')}}</th>
                 <th>{{__('Message')}}</th>
                 <th></th>
             </tr>

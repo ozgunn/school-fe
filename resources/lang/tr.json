@@ -114,6 +114,8 @@
     "New Message": "Yeni Mesaj",
     "Message": "Mesaj",
     "Message sent": "Mesaj gönderildi",
+    "Inbox": "Gelen Kutusu",
+    "Sent": "Gönderilenler",
 
     "Delete Confirmation": "Silme Onayı",
     "Are you sure you want to delete this item?": "Silmek istediğinizden emin misiniz?",
